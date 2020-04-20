@@ -5,6 +5,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
+import './signup.dart';
+
 Future<LoginData> fetchLogin() async {
   final response = await http.post("http://192.168.43.60:10000/vendor/login");
 
@@ -35,7 +37,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  var sgn = 1;
+  var sgn = 0;
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -47,6 +49,7 @@ class _MyAppState extends State<MyApp> {
             appBar: AppBar(
               title: Text("Stay Home Admin"),
             ),
+            backgroundColor: Colors.lightGreen,
             body: (sgn == 1)
             ? Column(
               mainAxisSize: MainAxisSize.max,
@@ -57,10 +60,12 @@ class _MyAppState extends State<MyApp> {
                   child: TextField(
                     obscureText:true,
                     decoration:InputDecoration(
-                      contentPadding: EdgeInsets.all(8))
+                      contentPadding: EdgeInsets.all(8),
+                      border: OutlineInputBorder())
                   ),
                 ),
             ]) 
-            : Column()));
+            : SignUp()
+            ));
   }
 }
