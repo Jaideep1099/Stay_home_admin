@@ -6,12 +6,12 @@ class SignUp extends StatelessWidget {
   SignUp();
   @override
   Widget build(BuildContext context) {
-    return Column(
-        mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.center,
+    return ListView(
+        //  mainAxisSize: MainAxisSize.max,
+        //  mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Container(
-            padding: EdgeInsets.fromLTRB(40, 10, 40, 5),
+            padding: EdgeInsets.fromLTRB(40, 30, 40, 10),
             child: Text(
               "SignUp",
               textAlign: TextAlign.left,
@@ -34,6 +34,7 @@ class SignUp extends StatelessWidget {
                 TextField(
                     obscureText: false,
                     decoration: InputDecoration(
+                        hoverColor: Colors.white,
                         contentPadding: EdgeInsets.all(8),
                         border: OutlineInputBorder(),
                         hintText: "Vendor Name")),
@@ -135,6 +136,19 @@ class SignUp extends StatelessWidget {
               ],
             ),
           ),
+          Container(
+              padding: EdgeInsets.fromLTRB(40, 30, 40, 5),
+              child: FlatButton(
+                color: Colors.green,
+                textColor: Colors.white,
+                onPressed: () {},
+                child: Text(
+                  "Register",
+                  style: TextStyle(
+                    fontSize: 22,
+                  ),
+                ),
+              )),
         ]);
   }
 }

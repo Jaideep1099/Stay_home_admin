@@ -49,7 +49,7 @@ class _MyAppState extends State<MyApp> {
             appBar: AppBar(
               title: Text("Stay Home Admin"),
             ),
-            backgroundColor: Colors.lightGreen,
+          //  backgroundColor: Colors.lightGreen,
             body: (sgn == 1)
             ? Column(
               mainAxisSize: MainAxisSize.max,
