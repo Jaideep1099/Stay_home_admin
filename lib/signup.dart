@@ -7,6 +7,22 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
+showError(BuildContext context,String error) {
+  var alert=AlertDialog(
+    title: Text('$error'),
+    actions: <Widget>[
+      FlatButton(onPressed: (){
+        Navigator.pop(context);
+        }, child: Text("back"))
+    ],
+  );
+  
+  showDialog(context: context,
+  builder:(BuildContext context){
+    return alert;
+  });
+}
+
 Future<SignUpData> trySignUp(String nm, String uid, String eid, String no,
     String pwd, String loc) async {
   final response = await http.post(
@@ -219,7 +235,10 @@ class _SignUpState extends State<SignUp> {
                   if (data == 'done')
                     Navigator.pop(context);
                   else
+                  {
+                    showError(context,error);
                     print(error);
+                  }
                 });
               },
               child: Text(
