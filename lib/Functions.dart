@@ -19,9 +19,9 @@ showError(BuildContext context, String error) {
       });
 }
 
-showMessage(BuildContext context, String msg) {
+showMessage(BuildContext context, String msgTitle) {
   var alert = AlertDialog(
-    title: Text('$msg'),
+    title: Text('$msgTitle'),
     content: Icon(Icons.done, color: Colors.green,),
     );
 
