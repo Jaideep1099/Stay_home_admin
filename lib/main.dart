@@ -43,6 +43,10 @@ class _SignInState extends State<SignIn> {
             children: <Widget>[
               Container(
                 padding: EdgeInsets.all(8),
+                child: Text("Sign In", style: TextStyle(fontWeight:FontWeight.w800, fontSize:26),),
+              ),
+              Container(
+                padding: EdgeInsets.all(8),
                 child: TextField(
                     obscureText: true,
                     decoration: InputDecoration(
@@ -56,7 +60,7 @@ class _SignInState extends State<SignIn> {
                       return SignUp();
                     }));
                   },
-                  child: Text("SignUp"))
+                  child: Text("New user? SignUp"))
             ]));
   }
 }

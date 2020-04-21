@@ -219,6 +219,12 @@ class _SignUpState extends State<SignUp> {
               onPressed: () async {
                 print("Button pressed");
                 setState(() {
+                  if(_controller_uid.text=="" || _controller_pwd.text=="" || _controller_no.text=="" || _controller_nm.text=="")
+                  {
+                    showError(context, "Enter all details");
+                  }
+                  else
+                  {
                   _futureSignupData = trySignUp(
                       _controller_nm.text,
                       _controller_uid.text,
@@ -226,6 +232,7 @@ class _SignUpState extends State<SignUp> {
                       _controller_no.text,
                       _controller_pwd.text,
                       _controller_loc.text);
+                  }
                 });
                 var data, error;
                 _futureSignupData.then((res) {
