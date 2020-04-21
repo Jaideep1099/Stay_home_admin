@@ -5,62 +5,62 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-Future<LoginData> fetchLogin() async {
-  final response = await http.post("http://192.168.43.60:10000/vendor/login");
-
-  if (response.statusCode == 200) {
-    return LoginData.fromJson(json.decode(response.body));
-  } else {
-    throw Exception('Failed to Login');
-  }
-}
-
-class LoginData {
-  final String sId;
-
-  LoginData({this.sId});
-
-  factory LoginData.fromJson(Map<String, dynamic> json) {
-    return LoginData(sId: json['login']);
-  }
-}
+import './signup.dart';
+import './home.dart';
 
 void main() => runApp(MyApp());
 
-class MyApp extends StatefulWidget {
-  @override
-  State<StatefulWidget> createState() {
-    return _MyAppState();
-  }
-}
-
-class _MyAppState extends State<MyApp> {
-  var sgn = 1;
+class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        title: 'Stay Home Admin',
-        theme: ThemeData(
-          primarySwatch: Colors.green,
+      debugShowCheckedModeBanner: false,
+      title: 'StayHome Admin',
+      theme: ThemeData(primarySwatch: Colors.green),
+      home: SignIn(),
+    );
+  }
+}
+
+class SignIn extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    return _SignInState();
+  }
+}
+
+class _SignInState extends State<SignIn> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: AppBar(
+          title: Text("Stay Home Admin"),
         ),
-        home: Scaffold(
-            appBar: AppBar(
-              title: Text("Stay Home Admin"),
-            ),
-            body: (sgn == 1)
-            ? Column(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Container(
-                  padding: EdgeInsets.all(8),
-                  child: TextField(
-                    obscureText:true,
-                    decoration:InputDecoration(
-                      contentPadding: EdgeInsets.all(8))
-                  ),
-                ),
-            ]) 
-            : Column()));
+        //  backgroundColor: Colors.lightGreen,
+        body: Column(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Container(
+                padding: EdgeInsets.all(8),
+                child: Text("Sign In", style: TextStyle(fontWeight:FontWeight.w800, fontSize:26),),
+              ),
+              Container(
+                padding: EdgeInsets.all(8),
+                child: TextField(
+                    obscureText: true,
+                    decoration: InputDecoration(
+                        contentPadding: EdgeInsets.all(8),
+                        border: OutlineInputBorder())),
+              ),
+              FlatButton(
+                  onPressed: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) {
+                      return SignUp();
+                    }));
+                  },
+                  child: Text("New user? SignUp"))
+            ]));
   }
 }
