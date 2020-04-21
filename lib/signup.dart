@@ -1,4 +1,3 @@
-import 'dart:math';
 import 'dart:ui';
 import 'dart:async';
 import 'dart:convert';
@@ -7,23 +6,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-showError(BuildContext context,String error) {
-  var alert=AlertDialog(
-    title: Text('$error'),
-    actions: <Widget>[
-      FlatButton(onPressed: (){
-        Navigator.pop(context);
-        }, child: Text("back"))
-    ],
-  );
-  
-  showDialog(context: context,
-  builder:(BuildContext context){
-    return alert;
-  });
-}
+import './Functions.dart';
+import './Classes.dart';
 
-Future<SignUpData> trySignUp(String nm, String uid, String eid, String no,
+Future<ResponseData> trySignUp(String nm, String uid, String eid, String no,
     String pwd, String loc) async {
   final response = await http.post(
     "http://192.168.43.60:8000/vendor/register",
@@ -43,20 +29,9 @@ Future<SignUpData> trySignUp(String nm, String uid, String eid, String no,
 
   if (response.statusCode == 200) {
     var data = json.decode(response.body);
-    return SignUpData.fromJson(data);
+    return ResponseData.fromJson(data);
   } else {
     throw Exception('Failed to SignUp');
-  }
-}
-
-class SignUpData {
-  final String result;
-  final String error;
-
-  SignUpData({this.result, this.error});
-
-  factory SignUpData.fromJson(Map<String, dynamic> json) {
-    return SignUpData(result: json['status'], error: json['ERROR']);
   }
 }
 
@@ -73,7 +48,7 @@ class _SignUpState extends State<SignUp> {
   final TextEditingController _controller_loc = TextEditingController();
   final TextEditingController _controller_pwd = TextEditingController();
 
-  Future<SignUpData> _futureSignupData;
+  Future<ResponseData> _futureData;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -219,31 +194,32 @@ class _SignUpState extends State<SignUp> {
               onPressed: () async {
                 print("Button pressed");
                 setState(() {
-                  if(_controller_uid.text=="" || _controller_pwd.text=="" || _controller_no.text=="" || _controller_nm.text=="")
-                  {
+                  if (_controller_uid.text == "" ||
+                      _controller_pwd.text == "" ||
+                      _controller_no.text == "" ||
+                      _controller_nm.text == "") {
                     showError(context, "Enter all details");
-                  }
-                  else
-                  {
-                  _futureSignupData = trySignUp(
-                      _controller_nm.text,
-                      _controller_uid.text,
-                      _controller_eid.text,
-                      _controller_no.text,
-                      _controller_pwd.text,
-                      _controller_loc.text);
+                  } else {
+                    _futureData = trySignUp(
+                        _controller_nm.text,
+                        _controller_uid.text,
+                        _controller_eid.text,
+                        _controller_no.text,
+                        _controller_pwd.text,
+                        _controller_loc.text);
                   }
                 });
                 var data, error;
-                _futureSignupData.then((res) {
+                _futureData.then((res) {
                   data = res.result;
                   error = res.error;
                   print("Data:$data  Error:$error");
-                  if (data == 'done')
+                  if (data == 'done') {
                     Navigator.pop(context);
-                  else
-                  {
-                    showError(context,error);
+                    showMessage(context,
+                        "Vendor Registered Successfully! Sign In to continue");
+                  } else {
+                    showError(context, error);
                     print(error);
                   }
                 });
