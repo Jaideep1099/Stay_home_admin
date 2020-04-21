@@ -8,7 +8,10 @@ import 'package:http/http.dart' as http;
 import './signup.dart';
 import './additem.dart';
 
-String sessionId="u5e9ef03f558dcc8110c69b45";
+var user ={
+  "sId": "v5e9ef03f558dcc8110c69b45",
+  "uname": "TK25"
+};
 
 void main() => runApp(MyApp());
 
@@ -45,7 +48,10 @@ class _SignInState extends State<SignIn> {
             children: <Widget>[
               Container(
                 padding: EdgeInsets.all(8),
-                child: Text("Sign In", style: TextStyle(fontWeight:FontWeight.w800, fontSize:26),),
+                child: Text(
+                  "Sign In",
+                  style: TextStyle(fontWeight: FontWeight.w800, fontSize: 26),
+                ),
               ),
               Container(
                 padding: EdgeInsets.all(8),
@@ -62,7 +68,15 @@ class _SignInState extends State<SignIn> {
                       return SignUp();
                     }));
                   },
-                  child: Text("New user? SignUp"))
+                  child: Text("New user? SignUp")),
+              FlatButton(
+                  onPressed: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) {
+                      return AddItem();
+                    }));
+                  },
+                  child: Text("AddItem")),
             ]));
   }
 }
