@@ -44,181 +44,218 @@ class AddItem extends StatefulWidget {
 class _AddItemState extends State<AddItem> {
   final TextEditingController _controller_Cd = TextEditingController();
   final TextEditingController _controller_Nm = TextEditingController();
-  final TextEditingController _controller_Typ = TextEditingController();
   final TextEditingController _controller_Qty = TextEditingController();
   final TextEditingController _controller_Mrp = TextEditingController();
+  String typValue = "--Select--";
+
+  List<String> typList = [
+    '--Select--',
+    'Rice',
+    'Cereals',
+    'Oil',
+    'Spices',
+    'Flours and Powders',
+    'Nuts',
+    'Tolilet items',
+    'Cleaning aids'
+  ];
 
   Future<ResponseData> _futureData;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text("Add Item")),
-      body: ListView(children: <Widget>[
-        Container(
-          padding: EdgeInsets.fromLTRB(40, 30, 40, 10),
-          child: Text(
-            "Add Item",
-            textAlign: TextAlign.left,
-            style: TextStyle(
-              fontSize: 26,
-              fontWeight: FontWeight.w900,
+      body: Container(
+        height: double.infinity,
+        child: ListView(children: <Widget>[
+          Container(
+            padding: EdgeInsets.fromLTRB(40, 40, 40, 10),
+            child: Text(
+              "Add Item",
+              textAlign: TextAlign.left,
+              style: TextStyle(
+                fontSize: 26,
+                fontWeight: FontWeight.w900,
+              ),
             ),
           ),
-        ),
-        Container(
-          padding: EdgeInsets.fromLTRB(40, 10, 40, 5),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Text(
-                "Item Name",
-                textAlign: TextAlign.left,
-                style: TextStyle(fontSize: 16),
-              ),
-              TextField(
-                  controller: _controller_Nm,
-                  obscureText: false,
-                  decoration: InputDecoration(
-                      hoverColor: Colors.white,
-                      contentPadding: EdgeInsets.all(8),
-                      border: OutlineInputBorder(),
-                      hintText: "Item Name")),
-            ],
-          ),
-        ),
-        Container(
-          padding: EdgeInsets.fromLTRB(40, 10, 40, 5),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Text(
-                "Item Code",
-                textAlign: TextAlign.left,
-                style: TextStyle(fontSize: 16),
-              ),
-              TextField(
-                  controller: _controller_Cd,
-                  obscureText: false,
-                  decoration: InputDecoration(
-                      contentPadding: EdgeInsets.all(8),
-                      border: OutlineInputBorder(),
-                      hintText: "Item Code")),
-            ],
-          ),
-        ),
-        Container(
-          padding: EdgeInsets.fromLTRB(40, 10, 40, 5),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Text(
-                "Item Type",
-                textAlign: TextAlign.left,
-                style: TextStyle(fontSize: 16),
-              ),
-              TextField(
-                  controller: _controller_Typ,
-                  obscureText: false,
-                  decoration: InputDecoration(
-                      contentPadding: EdgeInsets.all(8),
-                      border: OutlineInputBorder(),
-                      hintText: "Item Type")),
-            ],
-          ),
-        ),
-        Container(
-          padding: EdgeInsets.fromLTRB(40, 10, 40, 5),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Text(
-                "Stock",
-                textAlign: TextAlign.left,
-                style: TextStyle(fontSize: 16),
-              ),
-              TextField(
-                  keyboardType: TextInputType.number,
-                  controller: _controller_Qty,
-                  obscureText: false,
-                  decoration: InputDecoration(
-                      contentPadding: EdgeInsets.all(8),
-                      border: OutlineInputBorder(),
-                      hintText:
-                          "Enter currently available stock")),
-            ],
-          ),
-        ),
-        Container(
-          padding: EdgeInsets.fromLTRB(40, 10, 40, 5),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Text(
-                "Price",
-                textAlign: TextAlign.left,
-                style: TextStyle(fontSize: 16),
-              ),
-              TextField(
-                  keyboardType: TextInputType.number,
-                  controller: _controller_Mrp,
-                  obscureText: false,
-                  decoration: InputDecoration(
-                      contentPadding: EdgeInsets.all(8),
-                      border: OutlineInputBorder(),
-                      hintText: "Enter Retail Price per unit/kg")),
-            ],
-          ),
-        ),
-        Container(
-            padding: EdgeInsets.fromLTRB(40, 30, 40, 5),
-            child: FlatButton(
-              color: Colors.green,
-              textColor: Colors.white,
-              onPressed: () async {
-                print("Button pressed");
-                setState(() {
-                  if (_controller_Nm.text == "" ||
-                      _controller_Cd.text == "" ||
-                      _controller_Typ.text == "" ||
-                      _controller_Qty.text == "" ||
-                      _controller_Mrp.text == "") {
-                    showError(context, "Enter all details");
-                  } else {
-                    _futureData = addItem(
-                        _controller_Cd.text,
-                        _controller_Nm.text,
-                        _controller_Typ.text,
-                        _controller_Qty.text,
-                        _controller_Mrp.text,
-                        user);
-                  }
-                });
-                var data, error;
-                _futureData.then((res) {
-                  data = res.result;
-                  error = res.error;
-                  print("Data:$data  Error:$error");
-                  if (data == 'done') {
-                    showMessage(context, "Item Added Successfully");
-                    _controller_Cd.clear();
-                    _controller_Nm.clear();
-                    _controller_Typ.clear();
-                    _controller_Qty.clear();
-                    _controller_Mrp.clear();
-                  } else {
-                    showError(context, error);
-                    print(error);
-                  }
-                });
-              },
-              child: Text(
-                "Add",
-                style: TextStyle(
-                  fontSize: 22,
+          Container(
+            padding: EdgeInsets.fromLTRB(40, 25, 40, 5),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Text(
+                  "Item Name",
+                  textAlign: TextAlign.left,
+                  style: TextStyle(fontSize: 16),
                 ),
-              ),
-            )),
-      ]),
+                TextField(
+                    controller: _controller_Nm,
+                    obscureText: false,
+                    decoration: InputDecoration(
+                        hoverColor: Colors.white,
+                        contentPadding: EdgeInsets.all(8),
+                        border: OutlineInputBorder(),
+                        hintText: "Item Name")),
+              ],
+            ),
+          ),
+          Container(
+            padding: EdgeInsets.fromLTRB(40, 10, 40, 5),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Text(
+                  "Item Code",
+                  textAlign: TextAlign.left,
+                  style: TextStyle(fontSize: 16),
+                ),
+                TextField(
+                    controller: _controller_Cd,
+                    obscureText: false,
+                    decoration: InputDecoration(
+                        contentPadding: EdgeInsets.all(8),
+                        border: OutlineInputBorder(),
+                        hintText: "Item Code")),
+              ],
+            ),
+          ),
+          Container(
+            padding: EdgeInsets.fromLTRB(40, 10, 40, 5),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Text(
+                  "Item Type",
+                  textAlign: TextAlign.left,
+                  style: TextStyle(fontSize: 16),
+                ),
+                DropdownButton<String>(
+                  isExpanded: true,
+                  hint: Text("Select"),
+                  value: typValue,
+                  icon: Icon(
+                    Icons.keyboard_arrow_down,
+                    color: Colors.green,
+                  ),
+                  elevation: 16,
+                  style: TextStyle(
+                    color: Colors.black,
+                  ),
+                  underline: Container(height: 2, color: Colors.green),
+                  onChanged: (String newValue) {
+                    setState(() {
+                      typValue = newValue;
+                    });
+                  },
+                  items: typList.map((String val) {
+                    return DropdownMenuItem<String>(
+                      child: Text(
+                        '$val',
+                        style: TextStyle(fontSize: 16),
+                      ),
+                      value: val,
+                    );
+                  }).toList(),
+                )
+              ],
+            ),
+          ),
+          Container(
+            padding: EdgeInsets.fromLTRB(40, 10, 40, 5),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Text(
+                  "Stock",
+                  textAlign: TextAlign.left,
+                  style: TextStyle(fontSize: 16),
+                ),
+                TextField(
+                    keyboardType: TextInputType.number,
+                    controller: _controller_Qty,
+                    obscureText: false,
+                    decoration: InputDecoration(
+                        contentPadding: EdgeInsets.all(8),
+                        border: OutlineInputBorder(),
+                        hintText: "Enter currently available stock")),
+              ],
+            ),
+          ),
+          Container(
+            padding: EdgeInsets.fromLTRB(40, 10, 40, 5),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Text(
+                  "Price",
+                  textAlign: TextAlign.left,
+                  style: TextStyle(fontSize: 16),
+                ),
+                TextField(
+                    keyboardType: TextInputType.number,
+                    controller: _controller_Mrp,
+                    obscureText: false,
+                    decoration: InputDecoration(
+                        contentPadding: EdgeInsets.all(8),
+                        border: OutlineInputBorder(),
+                        hintText: "Enter Retail Price per unit/kg")),
+              ],
+            ),
+          ),
+          Container(
+              padding: EdgeInsets.fromLTRB(40, 30, 40, 5),
+              child: FlatButton(
+                color: Colors.green,
+                textColor: Colors.white,
+                onPressed: () async {
+                  print("Button pressed");
+                  setState(() {
+                    if (_controller_Nm.text == "" ||
+                        _controller_Cd.text == "" ||
+                        typValue == '--Select--' ||
+                        _controller_Qty.text == "" ||
+                        _controller_Mrp.text == "") {
+                      showError(context, "Enter all details");
+                    } else {
+                      _futureData = addItem(
+                          _controller_Cd.text,
+                          _controller_Nm.text,
+                          typValue,
+                          _controller_Qty.text,
+                          _controller_Mrp.text,
+                          user);
+                    }
+                  });
+                  var data, error;
+                  _futureData.then((res) {
+                    data = res.result;
+                    error = res.error;
+                    print("Data:$data  Error:$error");
+                    if (data == 'done') {
+                      showMessage(context, "Item Added Successfully");
+                      _controller_Cd.clear();
+                      _controller_Nm.clear();
+                      _controller_Qty.clear();
+                      setState(() {
+                        typValue = "--Select--";
+                      });
+                      _controller_Mrp.clear();
+                    } else {
+                      showError(context, error);
+                      print(error);
+                    }
+                  });
+                },
+                child: Text(
+                  "Add",
+                  style: TextStyle(
+                    fontSize: 22,
+                  ),
+                ),
+              )),
+        ]),
+      ),
     );
   }
 }

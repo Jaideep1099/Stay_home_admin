@@ -137,6 +137,7 @@ class _SignUpState extends State<SignUp> {
                 style: TextStyle(fontSize: 16),
               ),
               TextField(
+                keyboardType: TextInputType.numberWithOptions(decimal:false),
                   controller: _controller_no,
                   obscureText: false,
                   decoration: InputDecoration(
