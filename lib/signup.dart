@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'dart:ui';
 import 'dart:async';
 import 'dart:convert';
@@ -6,10 +7,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-
-String res;
-
-Future<dynamic> trySignUp(String nm, String uid, String eid, String no,
+Future<SignUpData> trySignUp(String nm, String uid, String eid, String no,
     String pwd, String loc) async {
   final response = await http.post(
     "http://192.168.43.60:8000/vendor/register",
@@ -29,17 +27,20 @@ Future<dynamic> trySignUp(String nm, String uid, String eid, String no,
 
   if (response.statusCode == 200) {
     var data = json.decode(response.body);
-    print(data);
-    if (data['status'] == 'done'){
-      res = '1';
-    }
-    else {
-      res = data['ERROR'];
-    }
-
-    return data;
+    return SignUpData.fromJson(data);
   } else {
     throw Exception('Failed to SignUp');
+  }
+}
+
+class SignUpData {
+  final String result;
+  final String error;
+
+  SignUpData({this.result, this.error});
+
+  factory SignUpData.fromJson(Map<String, dynamic> json) {
+    return SignUpData(result: json['status'], error: json['ERROR']);
   }
 }
 
@@ -56,11 +57,11 @@ class _SignUpState extends State<SignUp> {
   final TextEditingController _controller_loc = TextEditingController();
   final TextEditingController _controller_pwd = TextEditingController();
 
-  dynamic _futureSignupData;
+  Future<SignUpData> _futureSignupData;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title:Text("SignUp")),
+      appBar: AppBar(title: Text("SignUp")),
       body: ListView(children: <Widget>[
         Container(
           padding: EdgeInsets.fromLTRB(40, 30, 40, 10),
@@ -199,7 +200,7 @@ class _SignUpState extends State<SignUp> {
             child: FlatButton(
               color: Colors.green,
               textColor: Colors.white,
-              onPressed: () {
+              onPressed: () async {
                 print("Button pressed");
                 setState(() {
                   _futureSignupData = trySignUp(
@@ -210,8 +211,16 @@ class _SignUpState extends State<SignUp> {
                       _controller_pwd.text,
                       _controller_loc.text);
                 });
-                if(_futureSignupData['status']=='done')
-                  Navigator.pop(context);
+                var data, error;
+                _futureSignupData.then((res) {
+                  data = res.result;
+                  error = res.error;
+                  print("Data:$data  Error:$error");
+                  if (data == 'done')
+                    Navigator.pop(context);
+                  else
+                    print(error);
+                });
               },
               child: Text(
                 "Register",
