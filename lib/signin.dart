@@ -4,12 +4,13 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:stay_home_admin/Functions.dart';
-import 'package:stay_home_admin/additem.dart';
+
 
 import './main.dart';
 import './signup.dart';
+import './home.dart';
 import './Classes.dart';
+import './Functions.dart';
 
 Future<LoginData> _makePostRequest(String _userName, String _password) async {
   String url = 'http://192.168.43.61:8000/vendor/login';
@@ -44,7 +45,7 @@ class _SignInState extends State<SignIn> {
   final idCont = TextEditingController();
   final passCont = TextEditingController();
 
-  Future<LoginData> _future;
+  Future<LoginData> _futureData;
 
   @override
   Widget build(BuildContext context) {
@@ -138,23 +139,29 @@ class _SignInState extends State<SignIn> {
                           _userName = idCont.text;
                           _password = passCont.text;
                           print('Login Button Pressed');
-                          _future = _makePostRequest(_userName, _password);
+                          _futureData = _makePostRequest(_userName, _password);
+                          var error, data;
+                          _futureData.then((res) {
+                            data = res.token;
+                            error = res.error;
+
+                            if (error != null) {
+                              showError(context, error);
+                            } else {
+                              user['sId'] = res.token;
+                              user['uname'] = _userName;
+                              idCont.clear();
+                              passCont.clear();
+                              Navigator.push(context,
+                                  MaterialPageRoute(builder: (context) {
+                                return Home();
+                              }));
+                            }
+                          });
+
+                          _futureData = null;
                         }
                       });
-                      var error;
-                      _future.then((data) {
-                        user['sId'] = data.token;
-                        error = data.error;
-                      });
-                      if (error != null) {
-                        showError(context, error);
-                      } else {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) {
-                          return AddItem();
-                        }));
-                      }
-                      _future=null;
                     },
                     child: Text(
                       "LOGIN",
