@@ -3,14 +3,16 @@ import 'package:flutter/material.dart';
 
 import './signin.dart';
 
-var user ={
-  "sId": "v5e9ef03f558dcc8110c69b45",
-  "uname": "TK25"
-};
+var user = {"sId": "v", "uname": "TK25"};
 
 void main() => runApp(MyApp());
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

@@ -4,27 +4,31 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:stay_home_admin/Functions.dart';
+import 'package:stay_home_admin/additem.dart';
 
+import './main.dart';
 import './signup.dart';
+import './Classes.dart';
 
-
-  void _makePostRequest(String _userName,String _password) async {
-    String url = 'http://18.217.223.174:8000/vendor/signin';
-    var response = await http.post(
-      url,
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-        'authorization': 'vSignIn'
-      },
-      body:
-          jsonEncode(<String, String>{'User': _userName, 'Password': _password}),
-    );
-    int status = response.statusCode;
-    Map<String, dynamic> data = json.decode(response.body);
-    print(
-        "Response status from server: $status message: ${data['login']}"); //insted of login
-    //set key of sessionID
+Future<LoginData> _makePostRequest(String _userName, String _password) async {
+  String url = 'http://192.168.43.61:8000/vendor/login';
+  var response = await http.post(
+    url,
+    headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+      'authorization': 'vSignIn'
+    },
+    body:
+        jsonEncode(<String, String>{'User': _userName, 'Password': _password}),
+  );
+  if (response.statusCode == 200) {
+    var data = json.decode(response.body);
+    return LoginData.fromJson(data);
+  } else {
+    throw Exception('Failed to SignUp');
   }
+}
 
 class SignIn extends StatefulWidget {
   @override
@@ -34,11 +38,13 @@ class SignIn extends StatefulWidget {
 }
 
 class _SignInState extends State<SignIn> {
-  var _userName = null;
-  var _password = null;
+  var _userName;
+  var _password;
 
   final idCont = TextEditingController();
   final passCont = TextEditingController();
+
+  Future<LoginData> _future;
 
   @override
   Widget build(BuildContext context) {
@@ -126,11 +132,29 @@ class _SignInState extends State<SignIn> {
                     textColor: Colors.white,
                     onPressed: () {
                       setState(() {
-                        _userName = idCont.text;
-                        _password = passCont.text;
+                        if (idCont.text == "" || passCont.text == "") {
+                          showError(context, "Enter Username and Password");
+                        } else {
+                          _userName = idCont.text;
+                          _password = passCont.text;
+                          print('Login Button Pressed');
+                          _future = _makePostRequest(_userName, _password);
+                        }
                       });
-                      print('Login Button Pressed');
-                      _makePostRequest(_userName,_password);
+                      var error;
+                      _future.then((data) {
+                        user['sId'] = data.token;
+                        error = data.error;
+                      });
+                      if (error != null) {
+                        showError(context, error);
+                      } else {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) {
+                          return AddItem();
+                        }));
+                      }
+                      _future=null;
                     },
                     child: Text(
                       "LOGIN",
