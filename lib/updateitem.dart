@@ -10,10 +10,10 @@ import './main.dart';
 import './Classes.dart';
 import './Functions.dart';
 
-Future<ResponseData> addItem(String cd, String nm, String typ, String qty,
+Future<ResponseData> updateItem(String cd, String nm, String typ, String qty,
     String mrp, Map<String, String> user) async {
   final response = await http.post(
-    "http://192.168.43.60:8000/vendor/additem",
+    "http://192.168.43.60:8000/vendor/updateitem",
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
       'authorization': user['sId'],
@@ -36,12 +36,12 @@ Future<ResponseData> addItem(String cd, String nm, String typ, String qty,
   }
 }
 
-class AddItem extends StatefulWidget {
+class UpdateItem extends StatefulWidget {
   @override
-  _AddItemState createState() => _AddItemState();
+  _UpdateItemState createState() => _UpdateItemState();
 }
 
-class _AddItemState extends State<AddItem> {
+class _UpdateItemState extends State<UpdateItem> {
   final TextEditingController _controller_Cd = TextEditingController();
   final TextEditingController _controller_Nm = TextEditingController();
   final TextEditingController _controller_Qty = TextEditingController();
@@ -64,14 +64,14 @@ class _AddItemState extends State<AddItem> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Add Item")),
+      appBar: AppBar(title: Text("Update Item")),
       body: Container(
         height: double.infinity,
         child: ListView(children: <Widget>[
           Container(
             padding: EdgeInsets.fromLTRB(40, 40, 40, 10),
             child: Text(
-              "Add Item",
+              "Update Item Details",
               textAlign: TextAlign.left,
               style: TextStyle(
                 fontSize: 26,
@@ -178,7 +178,7 @@ class _AddItemState extends State<AddItem> {
                     decoration: InputDecoration(
                         contentPadding: EdgeInsets.all(8),
                         border: OutlineInputBorder(),
-                        hintText: "Enter currently available stock")),
+                        hintText: "Enter new stock")),
               ],
             ),
           ),
@@ -199,7 +199,7 @@ class _AddItemState extends State<AddItem> {
                     decoration: InputDecoration(
                         contentPadding: EdgeInsets.all(8),
                         border: OutlineInputBorder(),
-                        hintText: "Enter Retail Price per unit/kg")),
+                        hintText: "Enter new Price")),
               ],
             ),
           ),
@@ -218,7 +218,7 @@ class _AddItemState extends State<AddItem> {
                         _controller_Mrp.text == "") {
                       showError(context, "Enter all details");
                     } else {
-                      _futureData = addItem(
+                      _futureData = updateItem(
                           _controller_Cd.text,
                           _controller_Nm.text,
                           typValue,
@@ -227,13 +227,13 @@ class _AddItemState extends State<AddItem> {
                           user);
                     }
                   });
-                  var data, error;
+                  String data, error;
                   _futureData.then((res) {
                     data = res.result;
                     error = res.error;
                     print("Data:$data  Error:$error");
                     if (data == 'done') {
-                      showMessage(context, "Item Added Successfully");
+                      showMessage(context, "Item details Updated Successfully");
                       _controller_Cd.clear();
                       _controller_Nm.clear();
                       _controller_Qty.clear();
@@ -246,10 +246,10 @@ class _AddItemState extends State<AddItem> {
                       print(error);
                     }
                   });
-                  _futureData=null;
+                  _futureData = null;
                 },
                 child: Text(
-                  "Add",
+                  "Update",
                   style: TextStyle(
                     fontSize: 22,
                   ),
