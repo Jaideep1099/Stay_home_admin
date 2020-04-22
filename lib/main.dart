@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 import './signup.dart';
-import './additem.dart';
 
 var user ={
   "sId": "v5e9ef03f558dcc8110c69b45",
@@ -35,32 +34,117 @@ class SignIn extends StatefulWidget {
 }
 
 class _SignInState extends State<SignIn> {
+  
+  var _userName = null;
+  var _password = null;
+
+  final idCont = TextEditingController();
+  final passCont = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
           title: Text("Stay Home Admin"),
         ),
-        //  backgroundColor: Colors.lightGreen,
         body: Column(
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
+              Text(
+                'Sign In',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontFamily: 'OpenSans',
+                  fontSize: 30.0,
+                  fontWeight: FontWeight.w800,
+                ),
+              ),
+              SizedBox(height: 10,),
               Container(
-                padding: EdgeInsets.all(8),
-                child: Text(
-                  "Sign In",
-                  style: TextStyle(fontWeight: FontWeight.w800, fontSize: 26),
+
+                padding: EdgeInsets.fromLTRB(40, 10, 40, 5),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                      'UserID',
+                      style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: 'OpenSans',
+                              )
+                    ),
+                    Container(
+                      alignment: Alignment.centerLeft,
+                      padding: EdgeInsets.all(8),
+                      child: TextField(
+                                controller: idCont,
+                                decoration: InputDecoration(
+                                  contentPadding: EdgeInsets.all(8),
+                                  border: OutlineInputBorder(),
+                                  hintText: 'Enter User Name',
+                                )
+                              ),
+                    ),
+                  ],
+
+                ),
+              ),
+              SizedBox(height: 10,),
+              Container(
+                padding: EdgeInsets.fromLTRB(40, 10, 40, 5),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                      'Password',
+                      style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: 'OpenSans',
+                              )
+                    ),
+                    Container(
+                      alignment: Alignment.centerLeft,
+                      padding: EdgeInsets.all(8),
+                      child: TextField(
+                                controller: passCont,
+                                obscureText: true,
+                                decoration: InputDecoration(
+                                  contentPadding: EdgeInsets.all(8),
+                                  border: OutlineInputBorder(),
+                                  hintText: 'Enter Password',
+                                )
+                              ),
+                    ),
+                  ],
                 ),
               ),
               Container(
-                padding: EdgeInsets.all(8),
-                child: TextField(
-                    obscureText: true,
-                    decoration: InputDecoration(
-                        contentPadding: EdgeInsets.all(8),
-                        border: OutlineInputBorder())),
-              ),
+                padding: EdgeInsets.fromLTRB(40, 10, 40, 5),
+                width: double.infinity,
+                height: 60.0,
+                child: FlatButton(
+                  padding: EdgeInsets.all(8),
+                  color: Colors.green,
+                  textColor: Colors.white,
+                  onPressed: () {
+                    setState(() {
+                      _userName = idCont.text;
+                      _password = passCont.text;
+                    });
+                    print('Login Button Pressed');
+                    _makePostRequest();
+                  },
+                  child: Text(
+                    "LOGIN",
+                    style: TextStyle(
+                      fontSize: 22,
+                      letterSpacing: 1.5,
+                    ),
+                  ),
+                )),
               FlatButton(
                   onPressed: () {
                     Navigator.push(context,
@@ -68,15 +152,36 @@ class _SignInState extends State<SignIn> {
                       return SignUp();
                     }));
                   },
-                  child: Text("New user? SignUp")),
-              FlatButton(
-                  onPressed: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) {
-                      return AddItem();
-                    }));
-                  },
-                  child: Text("AddItem")),
-            ]));
+
+                  child: Text(
+                    "New user? SignUp",
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'OpenSans'
+                    ),
+                  )
+              )
+            ]
+          )
+      );
+  }
+
+  void _makePostRequest() async{
+    String url = 'http://18.217.223.174:8000/signin';
+    var response = await http.post(
+      url, 
+      headers: <String, String>{
+        'Content-Type' : 'application/json; charset=UTF-8',
+      }, 
+      body: jsonEncode(<String, String>{
+        'uname': _userName,
+        'passwd': _password
+      }),
+    );
+    int status = response.statusCode;
+    Map<String, dynamic> data = json.decode(response.body);
+    print("Response status from server: $status message: ${data['login']}"); //insted of login
+                                                                             //set key of sessionID
   }
 }
