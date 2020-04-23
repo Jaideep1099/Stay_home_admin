@@ -1,5 +1,5 @@
-import 'dart:ffi';
 import 'package:flutter/material.dart';
+import 'dart:ffi';
 
 class ResponseData {
   final String result;
@@ -50,16 +50,5 @@ class Order {
         to: json['To'],
         items: json['Items'],
         total: json['Total']);
-  }
-}
-
-class OrderList extends StatelessWidget {
-  final List<Order> orders;
-
-  OrderList({this.orders});
-
-  @override
-  Widget build(BuildContext context) {
-    return ListView.builder();
   }
 }

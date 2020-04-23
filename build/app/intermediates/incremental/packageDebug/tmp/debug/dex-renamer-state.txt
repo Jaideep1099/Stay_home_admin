@@ -1,4 +1,4 @@
-#Wed Apr 22 14:42:05 IST 2020
-base.0=D\:\\projects\\Stay_home_admin\\build\\app\\intermediates\\dex\\debug\\mergeDexDebug\\out\\classes.dex
+#Thu Apr 23 20:42:52 IST 2020
+base.0=C\:\\Users\\jaide\\Desktop\\Project\\stay_home_vendor\\build\\app\\intermediates\\dex\\debug\\mergeDexDebug\\out\\classes.dex
 path.0=classes.dex
 renamed.0=classes.dex

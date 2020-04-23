@@ -1,15 +1,35 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-import './home.dart';
 import './signin.dart';
-
-var user = {"sId": "v", "uname": ""};
+import './loginStatus.dart';
 
 void main() => runApp(MyApp());
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  @override
+  void initState() {
+    super.initState();
+    _loadLoginStatus();
+  }
+
+  _loadLoginStatus() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      user['isLoggedIn'] = (prefs.getInt('isLoggedIn') ?? 0);
+      if (user['isLoggedIn'] == 1) {
+        user['token'] = prefs.getString('token');
+        user['uname'] = prefs.getString('uname');
+      }
+    });
+  }
+
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,

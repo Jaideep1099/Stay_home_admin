@@ -193,35 +193,35 @@ class _SignUpState extends State<SignUp> {
               color: Colors.green,
               textColor: Colors.white,
               onPressed: () async {
-                print("Button pressed");
-                setState(() {
-                  if (_controller_uid.text == "" ||
-                      _controller_pwd.text == "" ||
-                      _controller_no.text == "" ||
-                      _controller_nm.text == "") {
-                    showError(context, "Enter all details");
-                  } else {
-                    _futureData = trySignUp(
-                        _controller_nm.text,
-                        _controller_uid.text,
-                        _controller_eid.text,
-                        _controller_no.text,
-                        _controller_pwd.text,
-                        _controller_loc.text);
-                  }
-                });
-                var data, error;
+                print("Register Button pressed");
+
+                if (_controller_uid.text == "" ||
+                    _controller_pwd.text == "" ||
+                    _controller_no.text == "" ||
+                    _controller_nm.text == "") {
+                  showError(context, "Enter all details");
+                } else {
+                  _futureData = trySignUp(
+                      _controller_nm.text,
+                      _controller_uid.text,
+                      _controller_eid.text,
+                      _controller_no.text,
+                      _controller_pwd.text,
+                      _controller_loc.text);
+                }
+
+                var _data, _error;
                 _futureData.then((res) {
-                  data = res.result;
-                  error = res.error;
-                  print("Data:$data  Error:$error");
-                  if (data == 'done') {
+                  _data = res.result;
+                  _error = res.error;
+                  print("Data:$_data  Error:$_error");
+                  if (_data == 'done') {
                     Navigator.pop(context);
                     showMessage(context,
                         "Vendor Registered Successfully! Sign In to continue");
                   } else {
-                    showError(context, error);
-                    print(error);
+                    showError(context, _error);
+                    print(_error);
                   }
                 });
                 _futureData = null;

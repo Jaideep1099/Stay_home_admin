@@ -6,7 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-import './main.dart';
+import './loginStatus.dart';
 import './Classes.dart';
 import './Functions.dart';
 
@@ -16,7 +16,7 @@ Future<ResponseData> updateItem(String cd, String nm, String typ, String qty,
     "http://192.168.43.60:8000/vendor/updateitem",
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
-      'authorization': user['sId'],
+      'authorization': user['token'],
     },
     body: jsonEncode(<String, String>{
       'User': user['uname'],
