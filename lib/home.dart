@@ -1,10 +1,9 @@
 import 'dart:convert';
+import 'dart:async';
 
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
-import 'dart:async';
 import 'package:http/http.dart' as http;
-import 'package:flutter/foundation.dart';
 
 import './Classes.dart';
 import './Functions.dart';
@@ -12,19 +11,7 @@ import './signin.dart';
 import './additem.dart';
 import './updateitem.dart';
 import './loginStatus.dart';
-
-Future<List<Order>> fetchOrders() async {
-  final response = await http.post(url + '/status',
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-        'authorization': user['token'],
-      },
-      body: jsonEncode(<String, String>{
-        'User': user['uname'],
-      }));
-
-  return compute(parseOrders, response.body);
-}
+import './orders.dart';
 
 Future<ResponseData> logout() async {
   final response = await http.post(
@@ -74,12 +61,12 @@ class _HomeState extends State<Home> {
         appBar: AppBar(title: Text("Home")),
         drawer: Drawer(
             child: SafeArea(
-              child: Column(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
               Container(
-                padding: EdgeInsets.fromLTRB(0, 20, 0, 20),
+                  padding: EdgeInsets.fromLTRB(0, 20, 0, 20),
                   width: double.infinity,
                   color: Colors.green,
                   child: Text(
@@ -90,9 +77,9 @@ class _HomeState extends State<Home> {
                         color: Colors.white),
                     textAlign: TextAlign.center,
                   ))
-          ],
-        ),
-            )),
+            ],
+          ),
+        )),
         body: GridView(
           gridDelegate:
               SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
@@ -103,6 +90,8 @@ class _HomeState extends State<Home> {
                 text: "Update Item Details",
                 icon: Icons.update,
                 page: UpdateItem()),
+            HomePageButton(
+                text: "Show Orders", icon: Icons.shopping_cart, page: Orders()),
             Container(
               padding: EdgeInsets.all(12),
               child: FlatButton(
@@ -131,7 +120,7 @@ class _HomeState extends State<Home> {
                       Text("Logout")
                     ]),
                 color: Colors.green,
-                textColor: Colors.white70,
+                textColor: Colors.white,
               ),
             ),
           ],
@@ -166,7 +155,7 @@ class HomePageButton extends StatelessWidget {
               Text(text)
             ]),
         color: Colors.green,
-        textColor: Colors.white70,
+        textColor: Colors.white,
       ),
     );
   }
