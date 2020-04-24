@@ -5,9 +5,10 @@ import 'dart:async';
 import 'package:http/http.dart' as http;
 import 'package:flutter/foundation.dart';
 
-import './additem.dart';
 import './Classes.dart';
 import './Functions.dart';
+import './additem.dart';
+import './updateitem.dart';
 
 Future<List<Order>> fetchOrders(Map<String, String> user) async {
   final response = await http.post('http://192.168.43.60:8000/vendor/status',
@@ -40,8 +41,6 @@ class _HomeState extends State<Home> {
             children: <Widget>[
               Container(
                   width: double.infinity,
-                  // height: 60.0,
-
                   color: Colors.green,
                   child: Text(
                     "Stay Home Vendor",
@@ -53,7 +52,46 @@ class _HomeState extends State<Home> {
                   ))
             ],
           )),
-          body: AddItem()),
+          body: GridView(
+            gridDelegate:
+                SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+            children: <Widget>[
+              HomePageButton(text:"Add Item",icon:Icons.add_box,page:AddItem()),
+              HomePageButton(text:"Update Item Details",icon:Icons.update,page:UpdateItem()),
+              HomePageButton(text:"Logout",icon:Icons.exit_to_app,page:UpdateItem()),
+            ],
+          )),
+    );
+  }
+}
+
+class HomePageButton extends StatelessWidget {
+  final String text;
+  final IconData icon;
+  final dynamic page;
+  HomePageButton({this.text,this.icon,this.page});
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.all(12),
+      child: FlatButton(
+        onPressed: () {
+          Navigator.push(context, MaterialPageRoute(builder: (context) {
+            return page;
+          }));
+        },
+        child: Column(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children:<Widget>[
+            Icon(icon,size: 50,),
+            Text(text)
+          ]
+        ),
+        color: Colors.green,
+        textColor: Colors.white70
+        ,
+      ),
     );
   }
 }
