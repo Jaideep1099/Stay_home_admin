@@ -13,9 +13,8 @@ import './Classes.dart';
 import './Functions.dart';
 
 Future<LoginData> _makePostRequest(String _userName, String _password) async {
-  String url = 'http://192.168.43.61:8000/vendor/login';
   var response = await http.post(
-    url,
+    url+'/login',
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
       'authorization': 'vSignIn'
@@ -146,7 +145,7 @@ class _SignInState extends State<SignIn> {
                       padding: EdgeInsets.all(8),
                       color: Colors.green,
                       textColor: Colors.white,
-                      onPressed: () {
+                      onPressed: () async {
                         if (idCont.text == "" || passCont.text == "") {
                           showError(context, "Enter Username and Password");
                         } else {
@@ -165,11 +164,6 @@ class _SignInState extends State<SignIn> {
                               _saveLoginStatus(_data,_userName);
                               idCont.clear();
                               passCont.clear();
-
-                              // Navigator.push(context,
-                              //     MaterialPageRoute(builder: (context) {
-                              //   return Home();
-                              // }));
                             }
                           });
 

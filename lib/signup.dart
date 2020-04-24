@@ -12,7 +12,7 @@ import './Classes.dart';
 Future<ResponseData> trySignUp(String nm, String uid, String eid, String no,
     String pwd, String loc) async {
   final response = await http.post(
-    "http://192.168.43.61:8000/vendor/register",
+    url+'/register',
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
       'authorization': 'vSignUp'

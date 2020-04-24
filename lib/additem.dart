@@ -64,6 +64,7 @@ class _AddItemState extends State<AddItem> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(title: Text("Add item"),),
       body: Container(
         height: double.infinity,
         child: ListView(children: <Widget>[

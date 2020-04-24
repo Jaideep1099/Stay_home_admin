@@ -10,10 +10,10 @@ import './loginStatus.dart';
 import './Classes.dart';
 import './Functions.dart';
 
-Future<ResponseData> updateItem(String cd, String nm, String typ, String qty,
-    String mrp, Map<String, String> user) async {
+Future<ResponseData> updateItem(
+    String cd, String nm, String typ, String qty, String mrp) async {
   final response = await http.post(
-    "http://192.168.43.60:8000/vendor/updateitem",
+    url + '/updateitem',
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
       'authorization': user['token'],
@@ -223,8 +223,7 @@ class _UpdateItemState extends State<UpdateItem> {
                           _controller_Nm.text,
                           typValue,
                           _controller_Qty.text,
-                          _controller_Mrp.text,
-                          user);
+                          _controller_Mrp.text);
                     }
                   });
                   String data, error;
