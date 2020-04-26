@@ -9,7 +9,7 @@ import './Classes.dart';
 import './Functions.dart';
 import './signin.dart';
 import './additem.dart';
-import './updateitem.dart';
+import './items.dart';
 import './loginStatus.dart';
 import './orders.dart';
 
@@ -46,9 +46,15 @@ class _HomeState extends State<Home> {
       user['isLoggedIn'] = 0;
       user['token'] = 'v';
       user['uname'] = '';
+      user['name'] = "";
+      user['no'] = "";
+      user['email'] = "";
       prefs.setInt('isLoggedIn', 0);
       prefs.setString('token', 'v');
       prefs.setString('uname', '');
+      prefs.setString('name', "");
+      prefs.setString('no', "");
+      prefs.setString('email', "");
     });
   }
 
@@ -60,26 +66,28 @@ class _HomeState extends State<Home> {
       return Scaffold(
         appBar: AppBar(title: Text("Home")),
         drawer: Drawer(
-            child: SafeArea(
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: <Widget>[
-              Container(
-                  padding: EdgeInsets.fromLTRB(0, 20, 0, 20),
-                  width: double.infinity,
-                  color: Colors.green,
-                  child: Text(
-                    "Stay Home Vendor",
-                    style: TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.w900,
-                        color: Colors.white),
-                    textAlign: TextAlign.center,
-                  ))
-            ],
+          child: SafeArea(
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                Container(
+                    padding: EdgeInsets.fromLTRB(0, 20, 0, 20),
+                    width: double.infinity,
+                    color: Colors.green,
+                    child: Text(
+                      "Stay Home Vendor",
+                      style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.w900,
+                          color: Colors.white),
+                      textAlign: TextAlign.center,
+                    )),
+                UserThumbnail(),
+              ],
+            ),
           ),
-        )),
+        ),
         body: GridView(
           gridDelegate:
               SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
@@ -87,11 +95,13 @@ class _HomeState extends State<Home> {
             HomePageButton(
                 text: "Add Item", icon: Icons.add_box, page: AddItem()),
             HomePageButton(
-                text: "Update Item Details",
+                text: "View / Update Items",
                 icon: Icons.update,
-                page: UpdateItem()),
+                page: ItemsPage()),
             HomePageButton(
-                text: "Show Orders", icon: Icons.shopping_cart, page: Orders()),
+                text: "Show Orders",
+                icon: Icons.shopping_cart,
+                page: OrderPage()),
             Container(
               padding: EdgeInsets.all(12),
               child: FlatButton(
@@ -156,6 +166,34 @@ class HomePageButton extends StatelessWidget {
             ]),
         color: Colors.green,
         textColor: Colors.white,
+      ),
+    );
+  }
+}
+
+class UserThumbnail extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: Colors.green[600],
+      child: Row(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Icon(
+            Icons.person,
+            size: 40,
+            color: Colors.white,
+          ),
+          Text(
+            user['uname'],
+            style: TextStyle(
+              fontSize: 24,
+              fontWeight: FontWeight.w500,
+              color: Colors.white,
+            ),
+          ),
+        ],
       ),
     );
   }

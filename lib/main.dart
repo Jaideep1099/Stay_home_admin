@@ -26,6 +26,9 @@ class _MyAppState extends State<MyApp> {
       if (user['isLoggedIn'] == 1) {
         user['token'] = prefs.getString('token');
         user['uname'] = prefs.getString('uname');
+        user['name'] = prefs.getString('name');
+        user['email'] = prefs.getString('email');
+        user['no'] = prefs.getString('no');
       }
     });
   }

@@ -14,7 +14,7 @@ import './Functions.dart';
 
 Future<LoginData> _makePostRequest(String _userName, String _password) async {
   var response = await http.post(
-    url+'/login',
+    url + '/login',
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
       'authorization': 'vSignIn'
@@ -46,15 +46,21 @@ class _SignInState extends State<SignIn> {
 
   Future<LoginData> _futureData;
 
-  _saveLoginStatus(String token,String uname) async {
+  _saveLoginStatus(LoginData data) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
-      user['isLoggedIn']=1;
-      user['token']=token;
-      user['uname']=uname;
+      user['isLoggedIn'] = 1;
+      user['token'] = data.token;
+      user['uname'] = data.user;
+      user['name'] = data.name;
+      user['no'] = data.no;
+      user['email'] = data.email;
       prefs.setInt('isLoggedIn', 1);
-      prefs.setString('token', token);
-      prefs.setString('uname', uname);
+      prefs.setString('token', data.token);
+      prefs.setString('uname', data.user);
+      prefs.setString('name', data.name);
+      prefs.setString('no', data.no);
+      prefs.setString('email', data.email);
     });
   }
 
@@ -157,11 +163,11 @@ class _SignInState extends State<SignIn> {
                           var _error, _data;
                           _futureData.then((res) {
                             _error = res.error;
-                            _data = res.token;
+                            _data = res;
                             if (_error != null) {
                               showError(context, _error);
                             } else {
-                              _saveLoginStatus(_data,_userName);
+                              _saveLoginStatus(_data);
                               idCont.clear();
                               passCont.clear();
                             }
