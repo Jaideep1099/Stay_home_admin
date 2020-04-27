@@ -11,20 +11,35 @@ import './Classes.dart';
 import './Functions.dart';
 
 Future<ResponseData> updateItem(
-    String cd, String nm, String typ, String qty, String mrp) async {
+    String cd, String nm, String typ, String qty, String mrp, Item old) async {
+  var oldData = {
+    'Code': old.code,
+    'Name': old.name,
+    'Type': old.type,
+    'Qty': old.qty,
+    'Price': old.price,
+    'vId': old.vId
+  };
+
+  var newData = {
+    'Code': cd,
+    'Name': nm,
+    'Type': typ,
+    'Qty': qty,
+    'Price': mrp,
+    'vId': old.vId
+  };
+  
   final response = await http.post(
-    url + '/updateitem',
+    url + '/edititem',
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
       'authorization': user['token'],
     },
-    body: jsonEncode(<String, String>{
+    body: jsonEncode(<String, dynamic>{
       'User': user['uname'],
-      'Code': cd,
-      'Name': nm,
-      'Type': typ,
-      'Qty': qty,
-      'Price': mrp,
+      'Old': oldData,
+      'New': newData,
     }),
   );
 
@@ -37,16 +52,21 @@ Future<ResponseData> updateItem(
 }
 
 class UpdateItem extends StatefulWidget {
+  final Item item;
+  UpdateItem(this.item);
   @override
-  _UpdateItemState createState() => _UpdateItemState();
+  _UpdateItemState createState() => _UpdateItemState(item);
 }
 
 class _UpdateItemState extends State<UpdateItem> {
+  final Item old;
+  _UpdateItemState(this.old);
+
   final TextEditingController _controller_Cd = TextEditingController();
   final TextEditingController _controller_Nm = TextEditingController();
   final TextEditingController _controller_Qty = TextEditingController();
   final TextEditingController _controller_Mrp = TextEditingController();
-  String typValue = "--Select--";
+  String typValue;
 
   List<String> typList = [
     '--Select--',
@@ -63,13 +83,18 @@ class _UpdateItemState extends State<UpdateItem> {
   Future<ResponseData> _futureData;
   @override
   Widget build(BuildContext context) {
+    typValue = old.type;
+    _controller_Cd.text = old.code;
+    _controller_Nm.text = old.name;
+    _controller_Mrp.text = old.price.toString();
+    _controller_Qty.text = old.qty.toString();
     return Scaffold(
       appBar: AppBar(title: Text("Update Item")),
       body: Container(
         height: double.infinity,
         child: ListView(children: <Widget>[
           Container(
-            padding: EdgeInsets.fromLTRB(40, 40, 40, 10),
+            padding: EdgeInsets.fromLTRB(30, 30, 30, 10),
             child: Text(
               "Update Item Details",
               textAlign: TextAlign.left,
@@ -80,7 +105,7 @@ class _UpdateItemState extends State<UpdateItem> {
             ),
           ),
           Container(
-            padding: EdgeInsets.fromLTRB(40, 25, 40, 5),
+            padding: EdgeInsets.fromLTRB(30, 25, 30, 5),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
@@ -90,6 +115,7 @@ class _UpdateItemState extends State<UpdateItem> {
                   style: TextStyle(fontSize: 16),
                 ),
                 TextField(
+                    maxLength: 70,
                     controller: _controller_Nm,
                     obscureText: false,
                     decoration: InputDecoration(
@@ -101,7 +127,7 @@ class _UpdateItemState extends State<UpdateItem> {
             ),
           ),
           Container(
-            padding: EdgeInsets.fromLTRB(40, 10, 40, 5),
+            padding: EdgeInsets.fromLTRB(30, 10, 30, 5),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
@@ -116,12 +142,12 @@ class _UpdateItemState extends State<UpdateItem> {
                     decoration: InputDecoration(
                         contentPadding: EdgeInsets.all(8),
                         border: OutlineInputBorder(),
-                        hintText: "Item Code")),
+                        hintText: "Old Item Code:${old.code}")),
               ],
             ),
           ),
           Container(
-            padding: EdgeInsets.fromLTRB(40, 10, 40, 5),
+            padding: EdgeInsets.fromLTRB(30, 10, 30, 5),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
@@ -162,7 +188,7 @@ class _UpdateItemState extends State<UpdateItem> {
             ),
           ),
           Container(
-            padding: EdgeInsets.fromLTRB(40, 10, 40, 5),
+            padding: EdgeInsets.fromLTRB(30, 10, 30, 5),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
@@ -183,7 +209,7 @@ class _UpdateItemState extends State<UpdateItem> {
             ),
           ),
           Container(
-            padding: EdgeInsets.fromLTRB(40, 10, 40, 5),
+            padding: EdgeInsets.fromLTRB(30, 10, 30, 5),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
@@ -204,7 +230,7 @@ class _UpdateItemState extends State<UpdateItem> {
             ),
           ),
           Container(
-              padding: EdgeInsets.fromLTRB(40, 30, 40, 5),
+              padding: EdgeInsets.fromLTRB(30, 30, 30, 10),
               child: FlatButton(
                 color: Colors.green,
                 textColor: Colors.white,
@@ -223,26 +249,21 @@ class _UpdateItemState extends State<UpdateItem> {
                           _controller_Nm.text,
                           typValue,
                           _controller_Qty.text,
-                          _controller_Mrp.text);
+                          _controller_Mrp.text,
+                          old);
                     }
                   });
-                  String data, error;
+                  String _data, _error;
                   _futureData.then((res) {
-                    data = res.result;
-                    error = res.error;
-                    print("Data:$data  Error:$error");
-                    if (data == 'done') {
+                    _data = res.result;
+                    _error = res.error;
+                    print("Data:$_data  Error:$_error");
+                    if (_data == 'done') {
+                      Navigator.pop(context);
                       showMessage(context, "Item details Updated Successfully");
-                      _controller_Cd.clear();
-                      _controller_Nm.clear();
-                      _controller_Qty.clear();
-                      setState(() {
-                        typValue = "--Select--";
-                      });
-                      _controller_Mrp.clear();
                     } else {
-                      showError(context, error);
-                      print(error);
+                      showError(context, _error);
+                      print(_error);
                     }
                   });
                   _futureData = null;

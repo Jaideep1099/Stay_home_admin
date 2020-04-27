@@ -69,7 +69,7 @@ class _AddItemState extends State<AddItem> {
         height: double.infinity,
         child: ListView(children: <Widget>[
           Container(
-            padding: EdgeInsets.fromLTRB(40, 40, 40, 10),
+            padding: EdgeInsets.fromLTRB(30, 40, 30, 10),
             child: Text(
               "Add Item",
               textAlign: TextAlign.left,
@@ -80,7 +80,7 @@ class _AddItemState extends State<AddItem> {
             ),
           ),
           Container(
-            padding: EdgeInsets.fromLTRB(40, 25, 40, 5),
+            padding: EdgeInsets.fromLTRB(30, 25, 30, 5),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
@@ -90,6 +90,7 @@ class _AddItemState extends State<AddItem> {
                   style: TextStyle(fontSize: 16),
                 ),
                 TextField(
+                  maxLength: 70,
                     controller: _controller_Nm,
                     obscureText: false,
                     decoration: InputDecoration(
@@ -101,7 +102,7 @@ class _AddItemState extends State<AddItem> {
             ),
           ),
           Container(
-            padding: EdgeInsets.fromLTRB(40, 10, 40, 5),
+            padding: EdgeInsets.fromLTRB(30, 10, 30, 5),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
@@ -121,7 +122,7 @@ class _AddItemState extends State<AddItem> {
             ),
           ),
           Container(
-            padding: EdgeInsets.fromLTRB(40, 10, 40, 5),
+            padding: EdgeInsets.fromLTRB(30, 10, 30, 5),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
@@ -162,7 +163,7 @@ class _AddItemState extends State<AddItem> {
             ),
           ),
           Container(
-            padding: EdgeInsets.fromLTRB(40, 10, 40, 5),
+            padding: EdgeInsets.fromLTRB(30, 10, 30, 5),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
@@ -183,7 +184,7 @@ class _AddItemState extends State<AddItem> {
             ),
           ),
           Container(
-            padding: EdgeInsets.fromLTRB(40, 10, 40, 5),
+            padding: EdgeInsets.fromLTRB(30, 10, 30, 5),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
@@ -204,7 +205,7 @@ class _AddItemState extends State<AddItem> {
             ),
           ),
           Container(
-              padding: EdgeInsets.fromLTRB(40, 30, 40, 5),
+              padding: EdgeInsets.fromLTRB(30, 20, 30, 5),
               child: FlatButton(
                 color: Colors.green,
                 textColor: Colors.white,

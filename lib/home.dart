@@ -162,7 +162,10 @@ class HomePageButton extends StatelessWidget {
                 icon,
                 size: 50,
               ),
-              Text(text)
+              Text(
+                text,
+                textAlign: TextAlign.center,
+              )
             ]),
         color: Colors.green,
         textColor: Colors.white,

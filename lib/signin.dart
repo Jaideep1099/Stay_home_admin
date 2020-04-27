@@ -73,17 +73,21 @@ class _SignInState extends State<SignIn> {
           appBar: AppBar(
             title: Text("Stay Home Admin"),
           ),
-          body: Column(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.center,
+          body: ListView(
+            //  mainAxisSize: MainAxisSize.max,
+            //  mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Text(
-                  'Sign In',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontFamily: 'OpenSans',
-                    fontSize: 30.0,
-                    fontWeight: FontWeight.w800,
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(0, 40, 0, 20),
+                  child: Text(
+                    'Sign In',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontFamily: 'OpenSans',
+                      fontSize: 30.0,
+                      fontWeight: FontWeight.w800,
+                    ),
                   ),
                 ),
                 SizedBox(
@@ -144,9 +148,8 @@ class _SignInState extends State<SignIn> {
                   ),
                 ),
                 Container(
-                    padding: EdgeInsets.fromLTRB(40, 10, 40, 5),
+                    padding: EdgeInsets.fromLTRB(50, 20, 50, 10),
                     width: double.infinity,
-                    height: 60.0,
                     child: FlatButton(
                       padding: EdgeInsets.all(8),
                       color: Colors.green,

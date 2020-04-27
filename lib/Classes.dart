@@ -52,8 +52,8 @@ class Item {
       code: json['Code'],
       name: json['Name'],
       type: json['Type'],
-      qty: json['Qty'],
-      price: json['Price'],
+      qty: json['Qty'].toDouble(),
+      price: json['Price'].toDouble(),
       vId: json['vId']
     );
   }
