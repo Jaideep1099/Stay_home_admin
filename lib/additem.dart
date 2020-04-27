@@ -64,23 +64,19 @@ class _AddItemState extends State<AddItem> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Add item"),),
-      body: Container(
-        height: double.infinity,
-        child: ListView(children: <Widget>[
-          Container(
-            padding: EdgeInsets.fromLTRB(30, 40, 30, 10),
-            child: Text(
-              "Add Item",
-              textAlign: TextAlign.left,
-              style: TextStyle(
-                fontSize: 26,
-                fontWeight: FontWeight.w900,
-              ),
-            ),
+      appBar: AppBar(
+        title: Text(
+          "Add Item",
+          textAlign: TextAlign.left,
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
           ),
+        ),
+      ),
+      body: Center(
+        child: ListView(shrinkWrap: true, children: <Widget>[
           Container(
-            padding: EdgeInsets.fromLTRB(30, 25, 30, 5),
+            padding: EdgeInsets.fromLTRB(30, 5, 30, 5),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
@@ -90,7 +86,7 @@ class _AddItemState extends State<AddItem> {
                   style: TextStyle(fontSize: 16),
                 ),
                 TextField(
-                  maxLength: 70,
+                    maxLength: 70,
                     controller: _controller_Nm,
                     obscureText: false,
                     decoration: InputDecoration(

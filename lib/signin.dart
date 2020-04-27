@@ -73,134 +73,135 @@ class _SignInState extends State<SignIn> {
           appBar: AppBar(
             title: Text("Stay Home Admin"),
           ),
-          body: ListView(
-            //  mainAxisSize: MainAxisSize.max,
-            //  mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(0, 40, 0, 20),
-                  child: Text(
-                    'Sign In',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontFamily: 'OpenSans',
-                      fontSize: 30.0,
-                      fontWeight: FontWeight.w800,
+          body: Center(
+            child: ListView(
+              shrinkWrap: true,
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(0, 0, 0, 15),
+                    child: Text(
+                      'Sign In',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontFamily: 'OpenSans',
+                        fontSize: 30.0,
+                        fontWeight: FontWeight.w800,
+                      ),
                     ),
                   ),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Container(
-                  padding: EdgeInsets.fromLTRB(40, 10, 40, 5),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text('UserID',
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: 'OpenSans',
-                          )),
-                      Container(
-                        alignment: Alignment.centerLeft,
-                        padding: EdgeInsets.all(8),
-                        child: TextField(
-                            controller: idCont,
-                            decoration: InputDecoration(
-                              contentPadding: EdgeInsets.all(8),
-                              border: OutlineInputBorder(),
-                              hintText: 'Enter User Name',
-                            )),
-                      ),
-                    ],
+                  SizedBox(
+                    height: 10,
                   ),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Container(
-                  padding: EdgeInsets.fromLTRB(40, 10, 40, 5),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text('Password',
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: 'OpenSans',
-                          )),
-                      Container(
-                        alignment: Alignment.centerLeft,
-                        padding: EdgeInsets.all(8),
-                        child: TextField(
-                            controller: passCont,
-                            obscureText: true,
-                            decoration: InputDecoration(
-                              contentPadding: EdgeInsets.all(8),
-                              border: OutlineInputBorder(),
-                              hintText: 'Enter Password',
+                  Container(
+                    padding: EdgeInsets.fromLTRB(40, 10, 40, 5),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Text('UserID',
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'OpenSans',
                             )),
-                      ),
-                    ],
+                        Container(
+                          alignment: Alignment.centerLeft,
+                          padding: EdgeInsets.all(8),
+                          child: TextField(
+                              controller: idCont,
+                              decoration: InputDecoration(
+                                contentPadding: EdgeInsets.all(8),
+                                border: OutlineInputBorder(),
+                                hintText: 'Enter User Name',
+                              )),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-                Container(
-                    padding: EdgeInsets.fromLTRB(50, 20, 50, 10),
-                    width: double.infinity,
-                    child: FlatButton(
-                      padding: EdgeInsets.all(8),
-                      color: Colors.green,
-                      textColor: Colors.white,
-                      onPressed: () async {
-                        if (idCont.text == "" || passCont.text == "") {
-                          showError(context, "Enter Username and Password");
-                        } else {
-                          _userName = idCont.text;
-                          _password = passCont.text;
-                          print('Login Button Pressed');
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Container(
+                    padding: EdgeInsets.fromLTRB(40, 10, 40, 5),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Text('Password',
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'OpenSans',
+                            )),
+                        Container(
+                          alignment: Alignment.centerLeft,
+                          padding: EdgeInsets.all(8),
+                          child: TextField(
+                              controller: passCont,
+                              obscureText: true,
+                              decoration: InputDecoration(
+                                contentPadding: EdgeInsets.all(8),
+                                border: OutlineInputBorder(),
+                                hintText: 'Enter Password',
+                              )),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Container(
+                      padding: EdgeInsets.fromLTRB(50, 20, 50, 10),
+                      width: double.infinity,
+                      child: FlatButton(
+                        padding: EdgeInsets.all(8),
+                        color: Colors.green,
+                        textColor: Colors.white,
+                        onPressed: () async {
+                          if (idCont.text == "" || passCont.text == "") {
+                            showError(context, "Enter Username and Password");
+                          } else {
+                            _userName = idCont.text;
+                            _password = passCont.text;
+                            print('Login Button Pressed');
 
-                          _futureData = _makePostRequest(_userName, _password);
-                          var _error, _data;
-                          _futureData.then((res) {
-                            _error = res.error;
-                            _data = res;
-                            if (_error != null) {
-                              showError(context, _error);
-                            } else {
-                              _saveLoginStatus(_data);
-                              idCont.clear();
-                              passCont.clear();
-                            }
-                          });
+                            _futureData = _makePostRequest(_userName, _password);
+                            var _error, _data;
+                            _futureData.then((res) {
+                              _error = res.error;
+                              _data = res;
+                              if (_error != null) {
+                                showError(context, _error);
+                              } else {
+                                _saveLoginStatus(_data);
+                                idCont.clear();
+                                passCont.clear();
+                              }
+                            });
 
-                          _futureData = null;
-                        }
+                            _futureData = null;
+                          }
+                        },
+                        child: Text(
+                          "LOGIN",
+                          style: TextStyle(
+                            fontSize: 22,
+                            letterSpacing: 1.5,
+                          ),
+                        ),
+                      )),
+                  FlatButton(
+                      onPressed: () {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) {
+                          return SignUp();
+                        }));
                       },
                       child: Text(
-                        "LOGIN",
+                        "New user? SignUp",
                         style: TextStyle(
-                          fontSize: 22,
-                          letterSpacing: 1.5,
-                        ),
-                      ),
-                    )),
-                FlatButton(
-                    onPressed: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) {
-                        return SignUp();
-                      }));
-                    },
-                    child: Text(
-                      "New user? SignUp",
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: 'OpenSans'),
-                    ))
-              ]));
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'OpenSans'),
+                      ))
+                ]),
+          ));
   }
 }

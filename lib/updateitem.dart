@@ -29,7 +29,7 @@ Future<ResponseData> updateItem(
     'Price': mrp,
     'vId': old.vId
   };
-  
+
   final response = await http.post(
     url + '/edititem',
     headers: <String, String>{
@@ -92,190 +92,193 @@ class _UpdateItemState extends State<UpdateItem> {
       appBar: AppBar(title: Text("Update Item")),
       body: Container(
         height: double.infinity,
-        child: ListView(children: <Widget>[
-          Container(
-            padding: EdgeInsets.fromLTRB(30, 30, 30, 10),
-            child: Text(
-              "Update Item Details",
-              textAlign: TextAlign.left,
-              style: TextStyle(
-                fontSize: 26,
-                fontWeight: FontWeight.w900,
+        child: Center(
+          child: ListView(shrinkWrap: true, children: <Widget>[
+            Container(
+              padding: EdgeInsets.fromLTRB(30, 0, 30, 10),
+              child: Text(
+                "Update Item Details",
+                textAlign: TextAlign.left,
+                style: TextStyle(
+                  fontSize: 26,
+                  fontWeight: FontWeight.w900,
+                ),
               ),
             ),
-          ),
-          Container(
-            padding: EdgeInsets.fromLTRB(30, 25, 30, 5),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Text(
-                  "Item Name",
-                  textAlign: TextAlign.left,
-                  style: TextStyle(fontSize: 16),
-                ),
-                TextField(
-                    maxLength: 70,
-                    controller: _controller_Nm,
-                    obscureText: false,
-                    decoration: InputDecoration(
-                        hoverColor: Colors.white,
-                        contentPadding: EdgeInsets.all(8),
-                        border: OutlineInputBorder(),
-                        hintText: "Item Name")),
-              ],
-            ),
-          ),
-          Container(
-            padding: EdgeInsets.fromLTRB(30, 10, 30, 5),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Text(
-                  "Item Code",
-                  textAlign: TextAlign.left,
-                  style: TextStyle(fontSize: 16),
-                ),
-                TextField(
-                    controller: _controller_Cd,
-                    obscureText: false,
-                    decoration: InputDecoration(
-                        contentPadding: EdgeInsets.all(8),
-                        border: OutlineInputBorder(),
-                        hintText: "Old Item Code:${old.code}")),
-              ],
-            ),
-          ),
-          Container(
-            padding: EdgeInsets.fromLTRB(30, 10, 30, 5),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Text(
-                  "Item Type",
-                  textAlign: TextAlign.left,
-                  style: TextStyle(fontSize: 16),
-                ),
-                DropdownButton<String>(
-                  isExpanded: true,
-                  hint: Text("Select"),
-                  value: typValue,
-                  icon: Icon(
-                    Icons.keyboard_arrow_down,
-                    color: Colors.green,
+            Container(
+              padding: EdgeInsets.fromLTRB(30, 25, 30, 5),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    "Item Name",
+                    textAlign: TextAlign.left,
+                    style: TextStyle(fontSize: 16),
                   ),
-                  elevation: 16,
-                  style: TextStyle(
-                    color: Colors.black,
+                  TextField(
+                      maxLength: 70,
+                      controller: _controller_Nm,
+                      obscureText: false,
+                      decoration: InputDecoration(
+                          hoverColor: Colors.white,
+                          contentPadding: EdgeInsets.all(8),
+                          border: OutlineInputBorder(),
+                          hintText: "Item Name")),
+                ],
+              ),
+            ),
+            Container(
+              padding: EdgeInsets.fromLTRB(30, 10, 30, 5),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    "Item Code",
+                    textAlign: TextAlign.left,
+                    style: TextStyle(fontSize: 16),
                   ),
-                  underline: Container(height: 2, color: Colors.green),
-                  onChanged: (String newValue) {
+                  TextField(
+                      controller: _controller_Cd,
+                      obscureText: false,
+                      decoration: InputDecoration(
+                          contentPadding: EdgeInsets.all(8),
+                          border: OutlineInputBorder(),
+                          hintText: "Old Item Code:${old.code}")),
+                ],
+              ),
+            ),
+            Container(
+              padding: EdgeInsets.fromLTRB(30, 10, 30, 5),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    "Item Type",
+                    textAlign: TextAlign.left,
+                    style: TextStyle(fontSize: 16),
+                  ),
+                  DropdownButton<String>(
+                    isExpanded: true,
+                    hint: Text("Select"),
+                    value: typValue,
+                    icon: Icon(
+                      Icons.keyboard_arrow_down,
+                      color: Colors.green,
+                    ),
+                    elevation: 16,
+                    style: TextStyle(
+                      color: Colors.black,
+                    ),
+                    underline: Container(height: 2, color: Colors.green),
+                    onChanged: (String newValue) {
+                      setState(() {
+                        typValue = newValue;
+                      });
+                    },
+                    items: typList.map((String val) {
+                      return DropdownMenuItem<String>(
+                        child: Text(
+                          '$val',
+                          style: TextStyle(fontSize: 16),
+                        ),
+                        value: val,
+                      );
+                    }).toList(),
+                  )
+                ],
+              ),
+            ),
+            Container(
+              padding: EdgeInsets.fromLTRB(30, 10, 30, 5),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    "Stock",
+                    textAlign: TextAlign.left,
+                    style: TextStyle(fontSize: 16),
+                  ),
+                  TextField(
+                      keyboardType: TextInputType.number,
+                      controller: _controller_Qty,
+                      obscureText: false,
+                      decoration: InputDecoration(
+                          contentPadding: EdgeInsets.all(8),
+                          border: OutlineInputBorder(),
+                          hintText: "Enter new stock")),
+                ],
+              ),
+            ),
+            Container(
+              padding: EdgeInsets.fromLTRB(30, 10, 30, 5),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    "Price",
+                    textAlign: TextAlign.left,
+                    style: TextStyle(fontSize: 16),
+                  ),
+                  TextField(
+                      keyboardType: TextInputType.number,
+                      controller: _controller_Mrp,
+                      obscureText: false,
+                      decoration: InputDecoration(
+                          contentPadding: EdgeInsets.all(8),
+                          border: OutlineInputBorder(),
+                          hintText: "Enter new Price")),
+                ],
+              ),
+            ),
+            Container(
+                padding: EdgeInsets.fromLTRB(30, 30, 30, 10),
+                child: FlatButton(
+                  color: Colors.green,
+                  textColor: Colors.white,
+                  onPressed: () async {
+                    print("Button pressed");
                     setState(() {
-                      typValue = newValue;
+                      if (_controller_Nm.text == "" ||
+                          _controller_Cd.text == "" ||
+                          typValue == '--Select--' ||
+                          _controller_Qty.text == "" ||
+                          _controller_Mrp.text == "") {
+                        showError(context, "Enter all details");
+                      } else {
+                        _futureData = updateItem(
+                            _controller_Cd.text,
+                            _controller_Nm.text,
+                            typValue,
+                            _controller_Qty.text,
+                            _controller_Mrp.text,
+                            old);
+                      }
                     });
+                    String _data, _error;
+                    _futureData.then((res) {
+                      _data = res.result;
+                      _error = res.error;
+                      print("Data:$_data  Error:$_error");
+                      if (_data == 'done') {
+                        Navigator.pop(context);
+                        showMessage(
+                            context, "Item details Updated Successfully");
+                      } else {
+                        showError(context, _error);
+                        print(_error);
+                      }
+                    });
+                    _futureData = null;
                   },
-                  items: typList.map((String val) {
-                    return DropdownMenuItem<String>(
-                      child: Text(
-                        '$val',
-                        style: TextStyle(fontSize: 16),
-                      ),
-                      value: val,
-                    );
-                  }).toList(),
-                )
-              ],
-            ),
-          ),
-          Container(
-            padding: EdgeInsets.fromLTRB(30, 10, 30, 5),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Text(
-                  "Stock",
-                  textAlign: TextAlign.left,
-                  style: TextStyle(fontSize: 16),
-                ),
-                TextField(
-                    keyboardType: TextInputType.number,
-                    controller: _controller_Qty,
-                    obscureText: false,
-                    decoration: InputDecoration(
-                        contentPadding: EdgeInsets.all(8),
-                        border: OutlineInputBorder(),
-                        hintText: "Enter new stock")),
-              ],
-            ),
-          ),
-          Container(
-            padding: EdgeInsets.fromLTRB(30, 10, 30, 5),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Text(
-                  "Price",
-                  textAlign: TextAlign.left,
-                  style: TextStyle(fontSize: 16),
-                ),
-                TextField(
-                    keyboardType: TextInputType.number,
-                    controller: _controller_Mrp,
-                    obscureText: false,
-                    decoration: InputDecoration(
-                        contentPadding: EdgeInsets.all(8),
-                        border: OutlineInputBorder(),
-                        hintText: "Enter new Price")),
-              ],
-            ),
-          ),
-          Container(
-              padding: EdgeInsets.fromLTRB(30, 30, 30, 10),
-              child: FlatButton(
-                color: Colors.green,
-                textColor: Colors.white,
-                onPressed: () async {
-                  print("Button pressed");
-                  setState(() {
-                    if (_controller_Nm.text == "" ||
-                        _controller_Cd.text == "" ||
-                        typValue == '--Select--' ||
-                        _controller_Qty.text == "" ||
-                        _controller_Mrp.text == "") {
-                      showError(context, "Enter all details");
-                    } else {
-                      _futureData = updateItem(
-                          _controller_Cd.text,
-                          _controller_Nm.text,
-                          typValue,
-                          _controller_Qty.text,
-                          _controller_Mrp.text,
-                          old);
-                    }
-                  });
-                  String _data, _error;
-                  _futureData.then((res) {
-                    _data = res.result;
-                    _error = res.error;
-                    print("Data:$_data  Error:$_error");
-                    if (_data == 'done') {
-                      Navigator.pop(context);
-                      showMessage(context, "Item details Updated Successfully");
-                    } else {
-                      showError(context, _error);
-                      print(_error);
-                    }
-                  });
-                  _futureData = null;
-                },
-                child: Text(
-                  "Update",
-                  style: TextStyle(
-                    fontSize: 22,
+                  child: Text(
+                    "Update",
+                    style: TextStyle(
+                      fontSize: 22,
+                    ),
                   ),
-                ),
-              )),
-        ]),
+                )),
+          ]),
+        ),
       ),
     );
   }
