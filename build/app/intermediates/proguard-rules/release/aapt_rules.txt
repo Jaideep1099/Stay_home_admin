@@ -1,0 +1,6 @@
+# Referenced at C:\Users\jaide\Desktop\Project\stay_home_vendor\build\app\intermediates\merged_manifests\release\arm64-v8a\AndroidManifest.xml:17
+-keep class androidx.core.app.CoreComponentFactory { <init>(); }
+# Referenced at C:\Users\jaide\Desktop\Project\stay_home_vendor\build\app\intermediates\merged_manifests\release\arm64-v8a\AndroidManifest.xml:22
+-keep class com.example.stay_home_admin.MainActivity { <init>(); }
+# Referenced at C:\Users\jaide\Desktop\Project\stay_home_vendor\build\app\intermediates\merged_manifests\release\arm64-v8a\AndroidManifest.xml:17
+-keep class io.flutter.app.FlutterApplication { <init>(); }
