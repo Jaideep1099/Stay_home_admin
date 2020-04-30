@@ -61,23 +61,27 @@ class Order {
   String orderId;
   String time;
   String from;
-  String to;
+  List<String> to;
   List<Item> items;
   double total;
 
   Order({this.time, this.from, this.to, this.items, this.total, this.orderId});
 
   factory Order.fromJson(Map<String, dynamic> json) {
-    var list= json['Items'] as List;
-    list.runtimeType;
-    List<Item> itemList = list.map((i) => Item.fromJson(i)).toList();
+    var toData = json['To'];
+    List<String> toList = List<String>.from(toData);
+
+    var itemData = json['Items'];
+    var parsedItems = itemData.cast<Map<String, dynamic>>();
+    List<Item> itemList =
+        parsedItems.map<Item>((j) => Item.fromJson(j)).toList();
     return Order(
         time: json['Time'],
         from: json['From'],
-        to: json['To'],
+        to: toList,
         items: itemList,
         total: json['Total'].toDouble(),
-        orderId: json['OrderId']);
+        orderId: json['OrderID']);
   }
 }
 
@@ -89,23 +93,20 @@ class OrderStatus {
   OrderStatus({this.pending, this.confirmed, this.completed});
 
   factory OrderStatus.fromJson(Map<String, dynamic> json) {
-    var parsed = json['Pending'] as List;
-    print(parsed.runtimeType);
-    List<Order> pendingList =
-        parsed.map((j) => Order.fromJson(j)).toList();
+    var pnd = json['Pending'];
+    var parsedPnd = pnd.cast<Map<String, dynamic>>();
+    List<Order> pndOrd =
+        parsedPnd.map<Order>((j) => Order.fromJson(j)).toList();
 
-    parsed = json['Confirmed'] as List;
-    parsed.runtimeType;
-    List<Order> confirmedList =
-        parsed.map((j) => Order.fromJson(j)).toList();
-    parsed = json['Completed'] as List;
-    parsed.runtimeType;
-    List<Order> completedList =
-        parsed.map((j) => Order.fromJson(j)).toList();
-    
-    return OrderStatus(
-        pending: pendingList,
-        confirmed: confirmedList,
-        completed: completedList);
+    var cnf = json['Confirmed'];
+    var parsedCnf = cnf.cast<Map<String, dynamic>>();
+    List<Order> cnfOrd =
+        parsedCnf.map<Order>((j) => Order.fromJson(j)).toList();
+
+    var cmp = json['Completed'];
+    var parsedCmp = cmp.cast<Map<String, dynamic>>();
+    List<Order> cmpOrd =
+        parsedCmp.map<Order>((j) => Order.fromJson(j)).toList();
+    return OrderStatus(pending: pndOrd, confirmed: cnfOrd, completed: cmpOrd);
   }
 }

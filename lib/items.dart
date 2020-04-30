@@ -52,7 +52,7 @@ class _ItemsPageState extends State<ItemsPage> {
             );
 
           return snapshot.hasData
-              ? ItemsList(items: snapshot.data)
+              ? _ItemsList(items: snapshot.data)
               : Center(child: CircularProgressIndicator());
         },
       ),
@@ -60,25 +60,25 @@ class _ItemsPageState extends State<ItemsPage> {
   }
 }
 
-class ItemsList extends StatelessWidget {
+class _ItemsList extends StatelessWidget {
   final List<Item> items;
 
-  ItemsList({this.items});
+  _ItemsList({this.items});
 
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
       itemCount: items.length,
       itemBuilder: (context, index) {
-        return ItemView(items[index]);
+        return _ItemView(items[index]);
       },
     );
   }
 }
 
-class ItemView extends StatelessWidget {
+class _ItemView extends StatelessWidget {
   final Item it;
-  ItemView(this.it);
+  _ItemView(this.it);
   final _style =
       TextStyle(color: Colors.black, fontSize: 14, fontWeight: FontWeight.w500);
 

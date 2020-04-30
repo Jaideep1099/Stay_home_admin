@@ -10,6 +10,7 @@ import './Functions.dart';
 import './signin.dart';
 import './additem.dart';
 import './items.dart';
+import './changepwd.dart';
 import './loginStatus.dart';
 import './orders.dart';
 
@@ -66,26 +67,31 @@ class _HomeState extends State<Home> {
       return Scaffold(
         appBar: AppBar(title: Text("Home")),
         drawer: Drawer(
-          child: SafeArea(
-            child: Column(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                Container(
-                    padding: EdgeInsets.fromLTRB(0, 20, 0, 20),
-                    width: double.infinity,
-                    color: Colors.green,
-                    child: Text(
-                      "Stay Home Vendor",
-                      style: TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.w900,
-                          color: Colors.white),
-                      textAlign: TextAlign.center,
-                    )),
-                UserThumbnail(),
-              ],
-            ),
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              Container(
+                  padding: EdgeInsets.fromLTRB(0, 45, 0, 20),
+                  width: double.infinity,
+                  color: Colors.green[700],
+                  child: Text(
+                    "Stay Home Vendor",
+                    style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.w900,
+                        color: Colors.white),
+                    textAlign: TextAlign.center,
+                  )),
+              UserThumbnail(),
+              Divider(height: 1,color: Colors.black,),
+              DrawerOption(
+                text: "Change Password",
+                icon: Icons.vpn_key,
+                page: ChangePwd(),
+              ),
+              Divider(height: 1,color: Colors.black,),
+            ],
           ),
         ),
         body: GridView(
@@ -177,26 +183,69 @@ class HomePageButton extends StatelessWidget {
 class UserThumbnail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    return Column(
+      children: <Widget>[
+        Container(
+          color: Colors.green[500],
+          child: Row(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Icon(
+                Icons.person,
+                size: 40,
+                color: Colors.white,
+              ),
+              Text(
+                user['uname'],
+                style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.white,
+                ),
+              ),
+            ],
+          ),
+        ),
+        Container(
+            width: double.infinity,
+            color: Colors.green[500],
+            child: Center(
+                child: Text(
+              user['name'],
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold),
+            )))
+      ],
+    );
+  }
+}
+
+class DrawerOption extends StatelessWidget {
+  final String text;
+  final IconData icon;
+  final page;
+  DrawerOption({@required this.text, @required this.icon, @required this.page});
+
+  @override
+  Widget build(BuildContext context) {
     return Container(
-      color: Colors.green[600],
-      child: Row(
-        mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Icon(
-            Icons.person,
-            size: 40,
-            color: Colors.white,
-          ),
-          Text(
-            user['uname'],
-            style: TextStyle(
-              fontSize: 24,
-              fontWeight: FontWeight.w500,
-              color: Colors.white,
-            ),
-          ),
-        ],
+      height: 30,
+      child: FlatButton(
+        onPressed: () {
+          Navigator.push(context, MaterialPageRoute(builder: (context){
+            return page;
+          }));
+        },
+        child: Row(
+          children: <Widget>[
+            Icon(icon),
+            SizedBox(width:10),
+            Text(text),
+          ],
+        ),
       ),
     );
   }

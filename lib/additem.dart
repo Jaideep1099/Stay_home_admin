@@ -10,10 +10,10 @@ import './loginStatus.dart';
 import './Classes.dart';
 import './Functions.dart';
 
-Future<ResponseData> addItem(String cd, String nm, String typ, String qty,
-    String mrp, Map<String, dynamic> user) async {
+Future<ResponseData> addItem(
+    String cd, String nm, String typ, String qty, String mrp) async {
   final response = await http.post(
-    "http://192.168.43.61:8000/vendor/additem",
+    url + '/additem',
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
       'authorization': user['token'],
@@ -216,12 +216,12 @@ class _AddItemState extends State<AddItem> {
                     showError(context, "Enter all details");
                   } else {
                     _futureData = addItem(
-                        _controller_Cd.text,
-                        _controller_Nm.text,
-                        typValue,
-                        _controller_Qty.text,
-                        _controller_Mrp.text,
-                        user);
+                      _controller_Cd.text,
+                      _controller_Nm.text,
+                      typValue,
+                      _controller_Qty.text,
+                      _controller_Mrp.text,
+                    );
                   }
 
                   var _data, _error;

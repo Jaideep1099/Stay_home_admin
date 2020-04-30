@@ -8,6 +8,7 @@ import 'package:stay_home_admin/home.dart';
 import './Classes.dart';
 import './Functions.dart';
 import './loginStatus.dart';
+import './orderdetails.dart';
 
 Future<OrderStatus> fetchOrders() async {
   final response = await http.post(url + '/status',
@@ -26,7 +27,7 @@ Future<OrderStatus> fetchOrders() async {
 
 OrderStatus parseOrders(String responseBody) {
   var data = jsonDecode(responseBody);
-  OrderStatus status=OrderStatus.fromJson(data);
+  OrderStatus status = OrderStatus.fromJson(data);
   return status;
 }
 
@@ -36,23 +37,7 @@ class OrderPage extends StatefulWidget {
 }
 
 class _OrderPageState extends State<OrderPage> {
-  Future<OrderStatus> _futureOrderDetails;
-  List<Order> pnd;
-  List<Order> cnf;
-  List<Order> cmp;
   @override
-  void initState() {
-    super.initState();
-    _futureOrderDetails = fetchOrders();
-    _futureOrderDetails.then((data) {
-      setState(() {
-        pnd = data.pending;
-        cnf = data.confirmed;
-        cmp = data.completed;
-      });
-    });
-  }
-
   Widget build(BuildContext context) {
     return DefaultTabController(
         length: 3,
@@ -82,38 +67,70 @@ class _OrderPageState extends State<OrderPage> {
                   print(snapshot.error);
                 } else
                   return (snapshot.hasData)
-                      ? OrderList(orders: snapshot.data.pending,)
-                      : CircularProgressIndicator();
+                      ? OrderList(
+                          orders: snapshot.data.pending,
+                          edit: 1,
+                        )
+                      : Center(child: CircularProgressIndicator());
               },
             ),
-            Icon(Icons.code),
-            Icon(Icons.code),
+            FutureBuilder<OrderStatus>(
+              future: fetchOrders(),
+              builder: (context, snapshot) {
+                if (snapshot.hasError) {
+                  print(snapshot.error);
+                } else
+                  return (snapshot.hasData)
+                      ? OrderList(
+                          orders: snapshot.data.confirmed,
+                          edit: 0,
+                        )
+                      : Center(child: CircularProgressIndicator());
+              },
+            ),
+            FutureBuilder<OrderStatus>(
+              future: fetchOrders(),
+              builder: (context, snapshot) {
+                if (snapshot.hasError) {
+                  print(snapshot.error);
+                  return Center(child:Icon(Icons.error));
+                } else
+                  return (snapshot.hasData)
+                      ? OrderList(
+                          orders: snapshot.data.completed,
+                          edit: 0,
+                        )
+                      :Center(child: CircularProgressIndicator());
+              },
+            ),
           ]),
         ));
   }
 }
 
 class OrderList extends StatelessWidget {
+  final int edit;
   final List<Order> orders;
 
-  OrderList({this.orders});
+  OrderList({this.orders, this.edit});
 
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
       itemCount: orders.length,
       itemBuilder: (context, index) {
-        return OrderView(orders[index]);
+        return OrderView(order: orders[index], edit: edit);
       },
     );
   }
 }
 
 class OrderView extends StatelessWidget {
+  final int edit;
   final Order order;
-  OrderView(this.order);
+  OrderView({this.order, this.edit});
   final _style =
-      TextStyle(color: Colors.black, fontSize: 14, fontWeight: FontWeight.w500);
+      TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold);
 
   @override
   Widget build(BuildContext context) {
@@ -124,49 +141,44 @@ class OrderView extends StatelessWidget {
       children: <Widget>[
         Container(
           width: double.infinity,
-          color: Colors.lightGreen[100],
+          color: Colors.green[100],
           padding: EdgeInsets.fromLTRB(8, 5, 8, 5),
           child: Row(
-            mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(
-                    order.orderId,
-                    style: _style,
-                  ),
-                  Container(
-                    width: MediaQuery.of(context).size.width * 0.7,
-                    child: Text(order.from,
-                        style: TextStyle(
-                            color: Colors.green[900],
-                            fontSize: 26,
-                            fontWeight: FontWeight.bold)),
-                  ),
-                ],
+              Container(
+                width: MediaQuery.of(context).size.width * 0.75,
+                child: Column(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text("OrderID : ${order.orderId}", style: _style),
+                    Text("UserID : ${order.from}", style: _style),
+                    Text("Time : ${order.time}", style: _style),
+                    Text("No. of Items : ${order.items.length}", style: _style),
+                    Text("Total Price : ${order.total}", style: _style),
+                  ],
+                ),
               ),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  Container(
-                    width: MediaQuery.of(context).size.width * 0.2,
-                    child: FlatButton(
-                      onPressed: () {},
-                      child: Text("Edit"),
-                      color: Colors.blue[600],
-                      textColor: Colors.white,
-                    ),
-                  )
-                ],
-              ),
+              Container(
+                width: MediaQuery.of(context).size.width * 0.2,
+                child: FlatButton(
+                  onPressed: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) {
+                      return OrderDetails(order,edit);
+                    }));
+                  },
+                  child: Text("Select"),
+                  color: Colors.blue[600],
+                  textColor: Colors.white,
+                ),
+              )
             ],
           ),
         ),
-        SizedBox(height: 5)
+        SizedBox(height: 10)
       ],
     );
   }

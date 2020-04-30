@@ -80,14 +80,18 @@ class _UpdateItemState extends State<UpdateItem> {
     'Cleaning aids'
   ];
 
-  Future<ResponseData> _futureData;
-  @override
-  Widget build(BuildContext context) {
+  initState() {
+    super.initState();
     typValue = old.type;
     _controller_Cd.text = old.code;
     _controller_Nm.text = old.name;
     _controller_Mrp.text = old.price.toString();
     _controller_Qty.text = old.qty.toString();
+  }
+
+  Future<ResponseData> _futureData;
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text("Update Item")),
       body: Container(

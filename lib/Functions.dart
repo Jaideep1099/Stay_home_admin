@@ -3,16 +3,22 @@ import 'dart:convert';
 
 import './Classes.dart';
 
-
 showError(BuildContext context, String error) {
   var alert = AlertDialog(
-    title: Text('$error'),
+  //  backgroundColor: Colors.red[100],
+    title: Text(
+      '$error',
+      textAlign: TextAlign.center,
+      style: TextStyle(
+        color: Colors.red,
+      ),
+    ),
     actions: <Widget>[
       FlatButton(
           onPressed: () {
             Navigator.pop(context);
           },
-          child: Text("back"))
+          child: Text("Back"))
     ],
   );
 
@@ -25,9 +31,12 @@ showError(BuildContext context, String error) {
 
 showMessage(BuildContext context, String msgTitle) {
   var alert = AlertDialog(
-    title: Text('$msgTitle'),
-    content: Icon(Icons.done, color: Colors.green,),
-    );
+    title: Text('$msgTitle',textAlign: TextAlign.center,),
+    content: Icon(
+      Icons.done,
+      color: Colors.green,
+    ),
+  );
 
   showDialog(
       context: context,
@@ -37,6 +46,6 @@ showMessage(BuildContext context, String msgTitle) {
 }
 
 List<Order> parseOrders(String responseBody) {
-  final parsed=json.decode(responseBody).cast<Map<String, dynamic>>();
-  return parsed.map<Order>((json)=>Order.fromJson(json)).toList();
+  final parsed = json.decode(responseBody).cast<Map<String, dynamic>>();
+  return parsed.map<Order>((json) => Order.fromJson(json)).toList();
 }
