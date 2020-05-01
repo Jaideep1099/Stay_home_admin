@@ -35,8 +35,8 @@
 23        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
 23-->[androidx.core:core:1.0.0] C:\Users\jaide\.gradle\caches\transforms-2\files-2.1\0a271e99b6771ad4a84318244d532fb7\core-1.0.0\AndroidManifest.xml:22:18-86
 24        android:debuggable="true"
-25        android:icon="@mipmap/ic_launcher"
-25-->C:\Users\jaide\Desktop\Project\stay_home_vendor\android\app\src\main\AndroidManifest.xml:16:9-43
+25        android:icon="@mipmap/stay_home_logo"
+25-->C:\Users\jaide\Desktop\Project\stay_home_vendor\android\app\src\main\AndroidManifest.xml:16:9-46
 26        android:label="stay_home_admin" >
 26-->C:\Users\jaide\Desktop\Project\stay_home_vendor\android\app\src\main\AndroidManifest.xml:15:9-40
 27        <activity

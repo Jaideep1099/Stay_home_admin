@@ -40,7 +40,7 @@ class ChangePwd extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
           title: Text(
-        "Change PassWord",
+        "Change Password",
         style: TextStyle(
           fontSize: 24,
           fontWeight: FontWeight.bold,

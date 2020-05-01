@@ -5,7 +5,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 import './signin.dart';
 import './loginStatus.dart';
 
-void main() => runApp(MyApp());
+import 'dart:async';
+
+
+
+void main()=>runApp(MyApp());       //Timer(Duration(seconds: 1),run);void run() =>runApp(MyApp());
 
 class MyApp extends StatefulWidget {
   @override

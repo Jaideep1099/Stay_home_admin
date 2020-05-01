@@ -95,6 +95,12 @@ class _UpdateItemState extends State<UpdateItem> {
     return Scaffold(
       appBar: AppBar(title: Text("Update Item")),
       body: Container(
+        decoration: BoxDecoration(
+            gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [Colors.white, Colors.green[100]],
+                stops: [0.9, 1])),
         height: double.infinity,
         child: Center(
           child: ListView(shrinkWrap: true, children: <Widget>[

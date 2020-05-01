@@ -60,178 +60,190 @@ class _SignUpState extends State<SignUp> {
           fontWeight: FontWeight.bold,
         ),
       )),
-      body: Center(
-        child: ListView(shrinkWrap: true, children: <Widget>[
-          Container(
-            padding: EdgeInsets.fromLTRB(40, 10, 40, 5),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Text(
-                  "Name",
-                  textAlign: TextAlign.left,
-                  style: TextStyle(fontSize: 16),
-                ),
-                TextField(
-                    controller: _controller_nm,
-                    obscureText: false,
-                    decoration: InputDecoration(
-                        hoverColor: Colors.white,
-                        contentPadding: EdgeInsets.all(8),
-                        border: OutlineInputBorder(),
-                        hintText: "Vendor Name")),
-              ],
-            ),
-          ),
-          Container(
-            padding: EdgeInsets.fromLTRB(40, 10, 40, 5),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Text(
-                  "UserID",
-                  textAlign: TextAlign.left,
-                  style: TextStyle(fontSize: 16),
-                ),
-                TextField(
-                    controller: _controller_uid,
-                    obscureText: false,
-                    decoration: InputDecoration(
-                        contentPadding: EdgeInsets.all(8),
-                        border: OutlineInputBorder(),
-                        hintText: "UserID will be used to LogIn")),
-              ],
-            ),
-          ),
-          Container(
-            padding: EdgeInsets.fromLTRB(40, 10, 40, 5),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Text(
-                  "Email ID",
-                  textAlign: TextAlign.left,
-                  style: TextStyle(fontSize: 16),
-                ),
-                TextField(
-                    controller: _controller_eid,
-                    obscureText: false,
-                    decoration: InputDecoration(
-                        contentPadding: EdgeInsets.all(8),
-                        border: OutlineInputBorder(),
-                        hintText: "Email ID")),
-              ],
-            ),
-          ),
-          Container(
-            padding: EdgeInsets.fromLTRB(40, 10, 40, 5),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Text(
-                  "Mobile No",
-                  textAlign: TextAlign.left,
-                  style: TextStyle(fontSize: 16),
-                ),
-                TextField(
-                    keyboardType:
-                        TextInputType.numberWithOptions(decimal: false),
-                    controller: _controller_no,
-                    obscureText: false,
-                    decoration: InputDecoration(
-                        contentPadding: EdgeInsets.all(8),
-                        border: OutlineInputBorder(),
-                        hintText: "Mobile No.")),
-              ],
-            ),
-          ),
-          Container(
-            padding: EdgeInsets.fromLTRB(40, 10, 40, 5),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Text(
-                  "Location",
-                  textAlign: TextAlign.left,
-                  style: TextStyle(fontSize: 16),
-                ),
-                TextField(
-                    controller: _controller_loc,
-                    obscureText: false,
-                    decoration: InputDecoration(
-                        contentPadding: EdgeInsets.all(8),
-                        border: OutlineInputBorder(),
-                        hintText: "Location/Shop Name")),
-              ],
-            ),
-          ),
-          Container(
-            padding: EdgeInsets.fromLTRB(40, 10, 40, 5),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Text(
-                  "Password",
-                  textAlign: TextAlign.left,
-                  style: TextStyle(fontSize: 16),
-                ),
-                TextField(
-                    controller: _controller_pwd,
-                    obscureText: true,
-                    decoration: InputDecoration(
-                        contentPadding: EdgeInsets.all(8),
-                        border: OutlineInputBorder(),
-                        hintText: "Password")),
-              ],
-            ),
-          ),
-          Container(
-              padding: EdgeInsets.fromLTRB(40, 30, 40, 5),
-              child: FlatButton(
-                color: Colors.green,
-                textColor: Colors.white,
-                onPressed: () async {
-                  print("Register Button pressed");
-
-                  if (_controller_uid.text == "" ||
-                      _controller_pwd.text == "" ||
-                      _controller_no.text == "" ||
-                      _controller_nm.text == "") {
-                    showError(context, "Enter all details");
-                  } else {
-                    _futureData = trySignUp(
-                        _controller_nm.text,
-                        _controller_uid.text,
-                        _controller_eid.text,
-                        _controller_no.text,
-                        _controller_pwd.text,
-                        _controller_loc.text);
-                  }
-
-                  var _data, _error;
-                  _futureData.then((res) {
-                    _data = res.result;
-                    _error = res.error;
-                    print("Data:$_data  Error:$_error");
-                    if (_data == 'done') {
-                      Navigator.pop(context);
-                      showMessage(context,
-                          "Vendor Registered Successfully! Sign In to continue");
-                    } else {
-                      showError(context, _error);
-                      print(_error);
-                    }
-                  });
-                  _futureData = null;
-                },
-                child: Text(
-                  "Register",
-                  style: TextStyle(
-                    fontSize: 22,
+      body: Container(
+        decoration: BoxDecoration(
+            gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [Colors.white, Colors.green[100]],
+                stops: [0.9, 1])),
+        child: Center(
+          child: ListView(shrinkWrap: true, children: <Widget>[
+            Container(
+              padding: EdgeInsets.fromLTRB(40, 10, 40, 5),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    "Name",
+                    textAlign: TextAlign.left,
+                    style: TextStyle(fontSize: 16),
                   ),
-                ),
-              )),
-        ]),
+                  TextField(
+                      controller: _controller_nm,
+                      obscureText: false,
+                      decoration: InputDecoration(
+                          hoverColor: Colors.white,
+                          contentPadding: EdgeInsets.all(8),
+                          border: OutlineInputBorder(),
+                          hintText: "Vendor Name")),
+                ],
+              ),
+            ),
+            Container(
+              padding: EdgeInsets.fromLTRB(40, 10, 40, 5),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    "UserID",
+                    textAlign: TextAlign.left,
+                    style: TextStyle(fontSize: 16),
+                  ),
+                  TextField(
+                      controller: _controller_uid,
+                      obscureText: false,
+                      decoration: InputDecoration(
+                          contentPadding: EdgeInsets.all(8),
+                          border: OutlineInputBorder(),
+                          hintText: "UserID will be used to LogIn")),
+                ],
+              ),
+            ),
+            Container(
+              padding: EdgeInsets.fromLTRB(40, 10, 40, 5),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    "Email ID",
+                    textAlign: TextAlign.left,
+                    style: TextStyle(fontSize: 16),
+                  ),
+                  TextField(
+                      controller: _controller_eid,
+                      obscureText: false,
+                      decoration: InputDecoration(
+                          contentPadding: EdgeInsets.all(8),
+                          border: OutlineInputBorder(),
+                          hintText: "Email ID")),
+                ],
+              ),
+            ),
+            Container(
+              padding: EdgeInsets.fromLTRB(40, 10, 40, 5),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    "Mobile No",
+                    textAlign: TextAlign.left,
+                    style: TextStyle(fontSize: 16),
+                  ),
+                  TextField(
+                      keyboardType:
+                          TextInputType.numberWithOptions(decimal: false),
+                      controller: _controller_no,
+                      obscureText: false,
+                      decoration: InputDecoration(
+                          contentPadding: EdgeInsets.all(8),
+                          border: OutlineInputBorder(),
+                          hintText: "Mobile No.")),
+                ],
+              ),
+            ),
+            Container(
+              padding: EdgeInsets.fromLTRB(40, 10, 40, 5),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    "Location",
+                    textAlign: TextAlign.left,
+                    style: TextStyle(fontSize: 16),
+                  ),
+                  TextField(
+                      controller: _controller_loc,
+                      obscureText: false,
+                      decoration: InputDecoration(
+                          contentPadding: EdgeInsets.all(8),
+                          border: OutlineInputBorder(),
+                          hintText: "Location/Shop Name")),
+                ],
+              ),
+            ),
+            Container(
+              padding: EdgeInsets.fromLTRB(40, 10, 40, 5),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    "Password",
+                    textAlign: TextAlign.left,
+                    style: TextStyle(fontSize: 16),
+                  ),
+                  TextField(
+                      controller: _controller_pwd,
+                      obscureText: true,
+                      decoration: InputDecoration(
+                          contentPadding: EdgeInsets.all(8),
+                          border: OutlineInputBorder(),
+                          hintText: "Password")),
+                ],
+              ),
+            ),
+            Container(
+                padding: EdgeInsets.fromLTRB(40, 30, 40, 5),
+                child: FlatButton(
+                  color: Colors.green,
+                  textColor: Colors.white,
+                  onPressed: () async {
+                    print("Register Button pressed");
+
+                    if (_controller_uid.text == "" ||
+                        _controller_pwd.text == "" ||
+                        _controller_no.text == "" ||
+                        _controller_nm.text == "") {
+                      showError(context, "Enter all details");
+                    } else {
+                      _futureData = trySignUp(
+                          _controller_nm.text,
+                          _controller_uid.text,
+                          _controller_eid.text,
+                          _controller_no.text,
+                          _controller_pwd.text,
+                          _controller_loc.text);
+                    }
+
+                    var _data, _error;
+                    _futureData.then((res) {
+                      _data = res.result;
+                      _error = res.error;
+                      print("Data:$_data  Error:$_error");
+                      if (_data == 'done') {
+                        Navigator.pop(context);
+                        showMessage(context,
+                            "Vendor Registered Successfully!\nSign In to continue");
+                      } else {
+                        if (_error == "E_VENDOR_ALREADY_EXIST")
+                          showError(context,
+                              "UserID already in use\nTry another one");
+                        else
+                          showError(context, _error);
+                        print(_error);
+                      }
+                    });
+                    _futureData = null;
+                  },
+                  child: Text(
+                    "Register",
+                    style: TextStyle(
+                      fontSize: 22,
+                    ),
+                  ),
+                )),
+          ]),
+        ),
       ),
     );
   }

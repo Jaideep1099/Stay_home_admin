@@ -24,6 +24,7 @@ color notification_action_color_filter
 color notification_icon_bg_color
 color ripple_material_light
 color secondary_text_default_material_light
+color white
 dimen compat_button_inset_horizontal_material
 dimen compat_button_inset_vertical_material
 dimen compat_button_padding_horizontal_material
@@ -47,6 +48,8 @@ dimen notification_subtext_size
 dimen notification_top_pad
 dimen notification_top_pad_large_text
 drawable launch_background
+drawable logo
+drawable logo240
 drawable notification_action_background
 drawable notification_bg
 drawable notification_bg_low
@@ -111,6 +114,7 @@ layout notification_template_icon_group
 layout notification_template_part_chronometer
 layout notification_template_part_time
 mipmap ic_launcher
+mipmap stay_home_logo
 string status_bar_notification_info_overflow
 style LaunchTheme
 style TextAppearance_Compat_Notification

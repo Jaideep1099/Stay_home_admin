@@ -170,7 +170,7 @@ class OrderView extends StatelessWidget {
                       return OrderDetails(order,edit);
                     }));
                   },
-                  child: Text("Select"),
+                  child: Text("View"),
                   color: Colors.blue[600],
                   textColor: Colors.white,
                 ),

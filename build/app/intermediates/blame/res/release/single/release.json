@@ -1,5 +1,13 @@
 [
     {
+        "merged": "C:\\Users\\jaide\\Desktop\\Project\\stay_home_vendor\\build\\app\\intermediates\\res\\merged\\release\\drawable_logo240.png.flat",
+        "source": "C:\\Users\\jaide\\Desktop\\Project\\stay_home_vendor\\android\\app\\src\\main\\res\\drawable\\logo240.png"
+    },
+    {
+        "merged": "C:\\Users\\jaide\\Desktop\\Project\\stay_home_vendor\\build\\app\\intermediates\\res\\merged\\release\\drawable_logo.png.flat",
+        "source": "C:\\Users\\jaide\\Desktop\\Project\\stay_home_vendor\\android\\app\\src\\main\\res\\drawable\\logo.png"
+    },
+    {
         "merged": "C:\\Users\\jaide\\Desktop\\Project\\stay_home_vendor\\build\\app\\intermediates\\res\\merged\\release\\layout-v16_notification_template_custom_big.xml.flat",
         "source": "C:\\Users\\jaide\\.gradle\\caches\\transforms-2\\files-2.1\\0a271e99b6771ad4a84318244d532fb7\\core-1.0.0\\res\\layout-v16\\notification_template_custom_big.xml"
     },

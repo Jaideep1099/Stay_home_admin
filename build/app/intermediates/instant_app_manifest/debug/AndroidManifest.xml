@@ -23,7 +23,7 @@
         android:name="io.flutter.app.FlutterApplication"
         android:appComponentFactory="androidx.core.app.CoreComponentFactory"
         android:debuggable="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/stay_home_logo"
         android:label="stay_home_admin" >
         <activity
             android:name="com.example.stay_home_admin.MainActivity"
