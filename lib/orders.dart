@@ -37,6 +37,14 @@ class OrderPage extends StatefulWidget {
 }
 
 class _OrderPageState extends State<OrderPage> {
+  Future<OrderStatus> _refresh() {
+    Future<OrderStatus> _orderStatus;
+    setState(() {
+      _orderStatus = fetchOrders();
+    });
+    return _orderStatus;
+  }
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -60,48 +68,57 @@ class _OrderPageState extends State<OrderPage> {
             ]),
           ),
           body: TabBarView(children: [
-            FutureBuilder<OrderStatus>(
-              future: fetchOrders(),
-              builder: (context, snapshot) {
-                if (snapshot.hasError) {
-                  print(snapshot.error);
-                } else
-                  return (snapshot.hasData)
-                      ? OrderList(
-                          orders: snapshot.data.pending,
-                          edit: 1,
-                        )
-                      : Center(child: CircularProgressIndicator());
-              },
+            RefreshIndicator(
+              onRefresh: _refresh,
+              child: FutureBuilder<OrderStatus>(
+                future: _refresh(),
+                builder: (context, snapshot) {
+                  if (snapshot.hasError) {
+                    print(snapshot.error);
+                  } else
+                    return (snapshot.hasData)
+                        ? OrderList(
+                            orders: snapshot.data.pending,
+                            edit: 1,
+                          )
+                        : Center(child: CircularProgressIndicator());
+                },
+              ),
             ),
-            FutureBuilder<OrderStatus>(
-              future: fetchOrders(),
-              builder: (context, snapshot) {
-                if (snapshot.hasError) {
-                  print(snapshot.error);
-                } else
-                  return (snapshot.hasData)
-                      ? OrderList(
-                          orders: snapshot.data.confirmed,
-                          edit: 0,
-                        )
-                      : Center(child: CircularProgressIndicator());
-              },
+            RefreshIndicator(
+              onRefresh: _refresh,
+              child: FutureBuilder<OrderStatus>(
+                future: _refresh(),
+                builder: (context, snapshot) {
+                  if (snapshot.hasError) {
+                    print(snapshot.error);
+                  } else
+                    return (snapshot.hasData)
+                        ? OrderList(
+                            orders: snapshot.data.confirmed,
+                            edit: 0,
+                          )
+                        : Center(child: CircularProgressIndicator());
+                },
+              ),
             ),
-            FutureBuilder<OrderStatus>(
-              future: fetchOrders(),
-              builder: (context, snapshot) {
-                if (snapshot.hasError) {
-                  print(snapshot.error);
-                  return Center(child:Icon(Icons.error));
-                } else
-                  return (snapshot.hasData)
-                      ? OrderList(
-                          orders: snapshot.data.completed,
-                          edit: 0,
-                        )
-                      :Center(child: CircularProgressIndicator());
-              },
+            RefreshIndicator(
+              onRefresh: _refresh,
+              child: FutureBuilder<OrderStatus>(
+                future: _refresh(),
+                builder: (context, snapshot) {
+                  if (snapshot.hasError) {
+                    print(snapshot.error);
+                    return Center(child: Icon(Icons.error));
+                  } else
+                    return (snapshot.hasData)
+                        ? OrderList(
+                            orders: snapshot.data.completed,
+                            edit: 0,
+                          )
+                        : Center(child: CircularProgressIndicator());
+                },
+              ),
             ),
           ]),
         ));
@@ -167,7 +184,7 @@ class OrderView extends StatelessWidget {
                   onPressed: () {
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) {
-                      return OrderDetails(order,edit);
+                      return OrderDetails(order, edit);
                     }));
                   },
                   child: Text("View"),
