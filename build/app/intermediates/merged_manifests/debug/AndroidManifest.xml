@@ -23,7 +23,7 @@
         android:appComponentFactory="androidx.core.app.CoreComponentFactory"
         android:debuggable="true"
         android:icon="@mipmap/stay_home_logo"
-        android:label="stay_home_admin" >
+        android:label="Stay Home Vendor" >
         <activity
             android:name="com.example.stay_home_admin.MainActivity"
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"

@@ -37,8 +37,8 @@
 24        android:debuggable="true"
 25        android:icon="@mipmap/stay_home_logo"
 25-->C:\Users\jaide\Desktop\Project\stay_home_vendor\android\app\src\main\AndroidManifest.xml:16:9-46
-26        android:label="stay_home_admin" >
-26-->C:\Users\jaide\Desktop\Project\stay_home_vendor\android\app\src\main\AndroidManifest.xml:15:9-40
+26        android:label="Stay Home Vendor" >
+26-->C:\Users\jaide\Desktop\Project\stay_home_vendor\android\app\src\main\AndroidManifest.xml:15:9-41
 27        <activity
 27-->C:\Users\jaide\Desktop\Project\stay_home_vendor\android\app\src\main\AndroidManifest.xml:17:9-28:20
 28            android:name="com.example.stay_home_admin.MainActivity"

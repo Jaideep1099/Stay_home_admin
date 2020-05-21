@@ -12,7 +12,7 @@
     <uses-feature android:name="android.hardware.wifi" />
     <application
         android:name="io.flutter.app.FlutterApplication"
-        android:label="stay_home_admin"
+        android:label="Stay Home Vendor"
         android:icon="@mipmap/stay_home_logo">
         <activity
             android:name=".MainActivity"

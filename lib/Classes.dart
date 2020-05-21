@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:ffi';
 
-var url = 'http://192.168.43.60:8000/vendor';
+var url = 'http://18.217.223.174:8080/vendor';
 
 class ResponseData {
   final String result;

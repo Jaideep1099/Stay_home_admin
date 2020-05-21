@@ -76,9 +76,9 @@ MERGED from [androidx.versionedparcelable:versionedparcelable:1.0.0] C:\Users\ja
 	android:appComponentFactory
 		ADDED from [androidx.core:core:1.0.0] C:\Users\jaide\.gradle\caches\transforms-2\files-2.1\0a271e99b6771ad4a84318244d532fb7\core-1.0.0\AndroidManifest.xml:22:18-86
 	android:label
-		ADDED from C:\Users\jaide\Desktop\Project\stay_home_vendor\android\app\src\main\AndroidManifest.xml:15:9-40
+		ADDED from C:\Users\jaide\Desktop\Project\stay_home_vendor\android\app\src\main\AndroidManifest.xml:15:9-41
 	android:icon
-		ADDED from C:\Users\jaide\Desktop\Project\stay_home_vendor\android\app\src\main\AndroidManifest.xml:16:9-43
+		ADDED from C:\Users\jaide\Desktop\Project\stay_home_vendor\android\app\src\main\AndroidManifest.xml:16:9-46
 	android:name
 		ADDED from C:\Users\jaide\Desktop\Project\stay_home_vendor\android\app\src\main\AndroidManifest.xml:14:9-57
 activity#com.example.stay_home_admin.MainActivity

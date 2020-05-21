@@ -1,48 +1,37 @@
-import 'package:flutter/material.dart';
 import 'dart:convert';
+
+import 'package:flutter/material.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 import './Classes.dart';
 
 showError(BuildContext context, String error) {
-  var alert = AlertDialog(
-  //  backgroundColor: Colors.red[100],
-    title: Text(
-      '$error',
-      textAlign: TextAlign.center,
-      style: TextStyle(
-        color: Colors.red,
-      ),
-    ),
-    actions: <Widget>[
-      FlatButton(
+  Alert(
+    context: context,
+    title: '$error',
+    buttons: [
+      DialogButton(
           onPressed: () {
             Navigator.pop(context);
           },
-          child: Text("Back"))
+          child: Text(
+            "Back",
+            style: TextStyle(color: Colors.white),
+          ))
     ],
-  );
-
-  showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return alert;
-      });
+  ).show();
 }
 
 showMessage(BuildContext context, String msgTitle) {
-  var alert = AlertDialog(
-    title: Text('$msgTitle',textAlign: TextAlign.center,),
-    content: Icon(
-      Icons.done,
-      color: Colors.green,
-    ),
-  );
-
-  showDialog(
+  Alert(
       context: context,
-      builder: (BuildContext context) {
-        return alert;
-      });
+      title: '$msgTitle',
+      content: Icon(
+        Icons.done,
+        color: Colors.green,
+        size: 40,
+      ),
+      buttons: []).show();
 }
 
 List<Order> parseOrders(String responseBody) {
