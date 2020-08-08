@@ -1,6 +1,9 @@
 # stay_home_admin
 
-A new Flutter project.
+A Flutter project.
+
+An app for the vendors to add their products and take orders
+This works as a vendor version of a Online store.
 
 ## Getting Started
 
